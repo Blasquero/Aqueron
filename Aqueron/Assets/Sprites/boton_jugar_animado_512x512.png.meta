@@ -1,0 +1,294 @@
+fileFormatVersion: 2
+guid: aad0d1361a66caa4188545a33a9eeddb
+timeCreated: 1521872061
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: boton_jugar_animado_512x512_0
+    21300002: boton_jugar_animado_512x512_1
+    21300004: boton_jugar_animado_512x512_2
+    21300006: boton_jugar_animado_512x512_3
+    21300008: boton_jugar_animado_512x512_4
+    21300010: boton_jugar_animado_512x512_5
+    21300012: boton_jugar_animado_512x512_6
+    21300014: boton_jugar_animado_512x512_7
+    21300016: boton_jugar_animado_512x512_8
+    21300018: boton_jugar_animado_512x512_9
+    21300020: boton_jugar_animado_512x512_10
+    21300022: boton_jugar_animado_512x512_11
+    21300024: boton_jugar_animado_512x512_12
+    21300026: boton_jugar_animado_512x512_13
+    21300028: boton_jugar_animado_512x512_14
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 32
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_0
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 198
+        width: 398
+        height: 116
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_1
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 198
+        width: 397
+        height: 116
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_2
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 198
+        width: 401
+        height: 120
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_3
+      rect:
+        serializedVersion: 2
+        x: 1590
+        y: 194
+        width: 405
+        height: 124
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_4
+      rect:
+        serializedVersion: 2
+        x: 2104
+        y: 194
+        width: 401
+        height: 124
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_5
+      rect:
+        serializedVersion: 2
+        x: 2614
+        y: 194
+        width: 408
+        height: 127
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_6
+      rect:
+        serializedVersion: 2
+        x: 3124
+        y: 191
+        width: 408
+        height: 130
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_7
+      rect:
+        serializedVersion: 2
+        x: 3634
+        y: 191
+        width: 412
+        height: 130
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_8
+      rect:
+        serializedVersion: 2
+        x: 4144
+        y: 191
+        width: 416
+        height: 134
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_9
+      rect:
+        serializedVersion: 2
+        x: 4657
+        y: 191
+        width: 413
+        height: 130
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_10
+      rect:
+        serializedVersion: 2
+        x: 5171
+        y: 194
+        width: 409
+        height: 127
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_11
+      rect:
+        serializedVersion: 2
+        x: 5685
+        y: 194
+        width: 409
+        height: 127
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_12
+      rect:
+        serializedVersion: 2
+        x: 6199
+        y: 198
+        width: 405
+        height: 123
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_13
+      rect:
+        serializedVersion: 2
+        x: 6712
+        y: 198
+        width: 402
+        height: 123
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boton_jugar_animado_512x512_14
+      rect:
+        serializedVersion: 2
+        x: 7226
+        y: 198
+        width: 398
+        height: 120
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
