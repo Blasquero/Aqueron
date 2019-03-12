@@ -67,7 +67,9 @@ public class EvaMovement : MonoBehaviour {
         {
             animator.SetBool("Jump", false);
         }
- 
+
+        if (isGrounded == false) animator.SetBool("Falling", true);
+        else animator.SetBool("Falling", false);
             
     }
 
