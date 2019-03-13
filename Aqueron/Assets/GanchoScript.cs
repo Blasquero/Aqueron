@@ -11,6 +11,8 @@ public class GanchoScript : MonoBehaviour
     private bool ganchoActivo;
     private bool deberiaMoverse;
     private bool hit;
+    [SerializeField]
+    private float moveSpeed = 15f;
     public PhysicsMaterial2D stickyMaterial;
     // Start is called before the first frame update
     void Start()
@@ -27,12 +29,7 @@ public class GanchoScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (ganchoActivo)
-        {
-            player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, 30f * Time.fixedDeltaTime);
-            player.GetComponent<Rigidbody2D>().gravityScale = 0;
-
-        }
+      
     }
     private void Update()
     {
@@ -44,7 +41,13 @@ public class GanchoScript : MonoBehaviour
             player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         }
         if(deberiaMoverse)
-        transform.Translate(new Vector2(0f, 20f) * Time.deltaTime);
+            transform.Translate(new Vector2(0f, 20f) * Time.deltaTime);
+
+        if (ganchoActivo) {
+            player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, moveSpeed * Time.deltaTime);
+            player.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

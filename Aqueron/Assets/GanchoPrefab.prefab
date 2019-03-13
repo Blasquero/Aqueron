@@ -119,4 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a354ffdc8d31743b327f51831478a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 20
   stickyMaterial: {fileID: 6200000, guid: e9d20437f6a005640899fe1ade6b3e43, type: 2}
