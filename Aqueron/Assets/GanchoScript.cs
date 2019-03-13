@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class GanchoScript : MonoBehaviour
 {
-
+    private Rigidbody2D playerRb;
     private GameObject player;
-    private Rigidbody2D rb;
     private int groundLayer;
     private bool ganchoActivo;
     private bool deberiaMoverse;
     private bool hit;
-    [SerializeField]
-    private float moveSpeed = 15f;
-    public PhysicsMaterial2D stickyMaterial;
+    [SerializeField] private float moveSpeed = 15f;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +19,8 @@ public class GanchoScript : MonoBehaviour
         Invoke("AutoDestruccion", 0.25f);
         Physics2D.IgnoreLayerCollision(12, 9);
         Physics2D.IgnoreLayerCollision(12, 10);
-        rb = GetComponent<Rigidbody2D>();
         deberiaMoverse = true;
+        playerRb = player.GetComponent<Rigidbody2D>();
 
     }
 
@@ -33,15 +30,17 @@ public class GanchoScript : MonoBehaviour
             Mathf.Abs(player.transform.position.y - transform.position.y) < 1)
         {
             Destroy(gameObject);
-            player.GetComponent<Rigidbody2D>().gravityScale = 7;
-            player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            playerRb.gravityScale = 7;
+            playerRb.velocity = Vector3.zero;
+            ganchoActivo = false;
         }
+
         if(deberiaMoverse)
             transform.Translate(new Vector2(0f, 20f) * Time.deltaTime);
 
         if (ganchoActivo) {
             player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, moveSpeed * Time.deltaTime);
-            player.GetComponent<Rigidbody2D>().gravityScale = 0;
+            playerRb.gravityScale = 0;
 
         }
     }
@@ -64,4 +63,5 @@ public class GanchoScript : MonoBehaviour
 
         player.GetComponent<Rigidbody2D>().gravityScale = 7;
     }
+   
 }
