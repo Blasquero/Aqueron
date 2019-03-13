@@ -20,7 +20,7 @@ public class EvaGanchoScript : MonoBehaviour
         {
             Instantiate(gancho, ganchoTrans.position, ganchoTrans.rotation);
             attackDone = true;
-            Invoke("AttackDone", 0.5f);
+            Invoke("AttackDone", 1f);
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = false;
         }

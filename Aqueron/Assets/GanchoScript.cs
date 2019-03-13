@@ -88,6 +88,8 @@ public class GanchoScript : MonoBehaviour
         Destroy(gameObject);
 
         player.GetComponent<Rigidbody2D>().gravityScale = 7;
+        SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
+        guadañaRenderer.enabled = true;
     }
     
     void StopMovingDelay()
