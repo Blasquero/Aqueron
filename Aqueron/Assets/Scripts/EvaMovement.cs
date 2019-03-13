@@ -7,6 +7,8 @@ public class EvaMovement : MonoBehaviour {
     //Variables componentes
     private Rigidbody2D rb;
     private Animator animator;
+    public Collider2D circleCollider;
+    public PhysicsMaterial2D normalMaterial;
 
     private float move;
     private int groundLayer;
@@ -89,6 +91,8 @@ public class EvaMovement : MonoBehaviour {
        if(collision.gameObject.layer == groundLayer)
         {
             isGrounded = true;
+            //Esto es para cuando se usa el gancho para que eva deje de pegarse a las paredes si no usa el gancho despues de tocar el suelo
+            circleCollider.sharedMaterial = normalMaterial;
         }
         
     }

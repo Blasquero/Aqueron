@@ -16,6 +16,8 @@ public class GanchoScript : MonoBehaviour
     private int groundLayer;
     private int guadañaLayer;
 
+    
+
     private GameObject guadaña;
 
     [SerializeField] private float moveSpeedGuadaña = 20f;
@@ -36,7 +38,7 @@ public class GanchoScript : MonoBehaviour
         guadañaLayer = LayerMask.NameToLayer("Guadaña");
 
         //Si no choca contra nada la guadaña, desaparece tras 0.5 segundos
-        Invoke("AutoDestruccion", 0.5f);
+        Invoke("AutoDestruccion", 0.35f);
         //Cuando spawnea el gancho, el colider del personaje no afecta
         Physics2D.IgnoreLayerCollision(guadañaLayer, playerLayer);
         //Tras 0.5s, si que afecta el colider del personaje asi cuando llega hasta el, al haber chocado contra algo, triggea que desaparezca

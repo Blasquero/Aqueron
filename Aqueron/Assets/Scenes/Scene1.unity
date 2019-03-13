@@ -453,6 +453,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbb2103005b8a740a5d191f72c2f75e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleCollider: {fileID: 365847532}
+  normalMaterial: {fileID: 6200000, guid: d95375c155435ac488e111015a3aa992, type: 2}
+  isGrounded: 0
   jumpForce: 1200
   velocidad: 10
   m_MovementSmoothing: 0.05
@@ -531,6 +534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gancho: {fileID: 692216455183138133, guid: 33c9c32751da4d4418171071c878b46e, type: 3}
   ganchoTrans: {fileID: 1992827269}
+  stickyMaterial: {fileID: 6200000, guid: e9d20437f6a005640899fe1ade6b3e43, type: 2}
 --- !u!1 &459825681
 GameObject:
   m_ObjectHideFlags: 0
