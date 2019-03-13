@@ -27,10 +27,6 @@ public class GanchoScript : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
-      
-    }
     private void Update()
     {
         if (Mathf.Abs(player.transform.position.x - transform.position.x) < 1 &&
