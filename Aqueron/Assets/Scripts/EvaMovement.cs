@@ -11,9 +11,10 @@ public class EvaMovement : MonoBehaviour {
     private float move;
     private int groundLayer;
 
-    private bool isGrounded;
+    [HideInInspector] public bool isGrounded;
     private bool jump;
     private bool facingRight;
+    public static EvaMovement Instance;
 
     //Variables fuerzas
     public float jumpForce = 1000f;
@@ -30,6 +31,7 @@ public class EvaMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
         //Layer suelo
         groundLayer = LayerMask.NameToLayer("Ground");
+        Instance = this;
 	}
 	
 	// Update is called once per frame

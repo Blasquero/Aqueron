@@ -9,6 +9,7 @@ public class GanchoScript : MonoBehaviour
     private bool ganchoActivo;
     private bool deberiaMoverse;
     private bool hit;
+    private bool ganchoAereo = true;
 
     private int playerLayer;
     private int boundariesLayer;
@@ -45,6 +46,7 @@ public class GanchoScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Cuando gancho choca contra pared, eva se desplazaz hacia su posicion, la gravedad deja de afectarle y la aceleracion previa que tenia se anula
         if (ganchoActivo)
         {
             player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, moveSpeedEva * Time.fixedDeltaTime);
@@ -52,12 +54,28 @@ public class GanchoScript : MonoBehaviour
             playerRb.velocity = Vector3.zero;
 
         }
+
+        //Cuando eva lanza la guadaña, cae lentamente (le pongo el ganchoAereo para que solo le afecte una vez y no todo el rato lo cual haria un descenso raro)
+        if (gameObject != null && !EvaMovement.Instance.isGrounded && ganchoAereo)
+        {
+            playerRb.gravityScale = 4;
+            playerRb.velocity = Vector3.zero;
+            ganchoAereo = false;
+        }
     }
 
     private void Update()
     {
+        //Movimiento de gancho
         if(deberiaMoverse)
             transform.Translate(new Vector2(0f, moveSpeedGuadaña) * Time.deltaTime);
+
+        //Cuando eva toca el suelo, puede volver afectarle la relentizacion de lanzar el gancho en el aire y recupera el control
+        if (EvaMovement.Instance.isGrounded)
+        {
+            ganchoAereo = true;
+            EvaMovement.Instance.enabled = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -79,6 +97,7 @@ public class GanchoScript : MonoBehaviour
             ganchoActivo = false;
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
+            EvaMovement.Instance.enabled = true;
         }
     }
 
@@ -90,6 +109,7 @@ public class GanchoScript : MonoBehaviour
         player.GetComponent<Rigidbody2D>().gravityScale = 7;
         SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
         guadañaRenderer.enabled = true;
+        EvaMovement.Instance.enabled = true;
     }
     
     void StopMovingDelay()
