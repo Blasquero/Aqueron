@@ -15,6 +15,8 @@ public class GanchoScript : MonoBehaviour
     private int groundLayer;
     private int guadañaLayer;
 
+    private GameObject guadaña;
+
     [SerializeField] private float moveSpeedGuadaña = 20f;
     [SerializeField] private float moveSpeedEva = 15f;
 
@@ -24,6 +26,8 @@ public class GanchoScript : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         playerRb = player.GetComponent<Rigidbody2D>();
+
+        guadaña = GameObject.FindGameObjectWithTag("Guadaña");
 
         playerLayer = LayerMask.NameToLayer("Player");
         boundariesLayer = LayerMask.NameToLayer("Boudaries");
@@ -73,6 +77,8 @@ public class GanchoScript : MonoBehaviour
             playerRb.gravityScale = 7;
             playerRb.velocity = Vector3.zero;
             ganchoActivo = false;
+            SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
+            guadañaRenderer.enabled = true;
         }
     }
 

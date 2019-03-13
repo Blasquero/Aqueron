@@ -7,8 +7,13 @@ public class EvaGanchoScript : MonoBehaviour
     public GameObject gancho;
     public Transform ganchoTrans;
     private bool attackDone;
+    private GameObject guadaña;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        guadaña = GameObject.FindGameObjectWithTag("Guadaña");    
+    }
+
     void Update()
     {
         if (Input.GetButtonDown("Fire1") && !attackDone)
@@ -16,6 +21,8 @@ public class EvaGanchoScript : MonoBehaviour
             Instantiate(gancho, ganchoTrans.position, ganchoTrans.rotation);
             attackDone = true;
             Invoke("AttackDone", 0.5f);
+            SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
+            guadañaRenderer.enabled = false;
         }
     }
     
