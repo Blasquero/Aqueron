@@ -2696,7 +2696,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1454174431}
   - component: {fileID: 1454174432}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: "Guada\xF1a"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3628,7 +3628,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992827268}
   m_LocalRotation: {x: -0, y: -0, z: -0.5985488, w: 0.80108637}
-  m_LocalPosition: {x: 2.13, y: 0.84, z: 0}
+  m_LocalPosition: {x: -0.16, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 365847530}

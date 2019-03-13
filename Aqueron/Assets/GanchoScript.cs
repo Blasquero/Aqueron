@@ -6,43 +6,54 @@ public class GanchoScript : MonoBehaviour
 {
     private Rigidbody2D playerRb;
     private GameObject player;
-    private int groundLayer;
     private bool ganchoActivo;
     private bool deberiaMoverse;
     private bool hit;
-    [SerializeField] private float moveSpeed = 15f;
-    // Start is called before the first frame update
+
+    private int playerLayer;
+    private int boundariesLayer;
+    private int groundLayer;
+    private int guadañaLayer;
+
+    [SerializeField] private float moveSpeedGuadaña = 20f;
+    [SerializeField] private float moveSpeedEva = 15f;
+
     void Start()
     {
+        Physics2D.IgnoreLayerCollision(guadañaLayer, boundariesLayer);
+
         player = GameObject.FindGameObjectWithTag("Player");
-        groundLayer = LayerMask.NameToLayer("Ground");
-        Invoke("AutoDestruccion", 0.25f);
-        Physics2D.IgnoreLayerCollision(12, 9);
-        Physics2D.IgnoreLayerCollision(12, 10);
-        deberiaMoverse = true;
         playerRb = player.GetComponent<Rigidbody2D>();
 
+        playerLayer = LayerMask.NameToLayer("Player");
+        boundariesLayer = LayerMask.NameToLayer("Boudaries");
+        groundLayer = LayerMask.NameToLayer("Ground");
+        guadañaLayer = LayerMask.NameToLayer("Guadaña");
+
+        //Si no choca contra nada la guadaña, desaparece tras 0.5 segundos
+        Invoke("AutoDestruccion", 0.5f);
+        //Cuando spawnea el gancho, el colider del personaje no afecta
+        Physics2D.IgnoreLayerCollision(guadañaLayer, playerLayer);
+        //Tras 0.5s, si que afecta el colider del personaje asi cuando llega hasta el, al haber chocado contra algo, triggea que desaparezca
+        Invoke("StopIgnoringPlayer", 0.5f);
+        deberiaMoverse = true;
+    }
+
+    private void FixedUpdate()
+    {
+        if (ganchoActivo)
+        {
+            player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, moveSpeedEva * Time.fixedDeltaTime);
+            playerRb.gravityScale = 0;
+            playerRb.velocity = Vector3.zero;
+
+        }
     }
 
     private void Update()
     {
-        if (Mathf.Abs(player.transform.position.x - transform.position.x) < 1 &&
-            Mathf.Abs(player.transform.position.y - transform.position.y) < 1)
-        {
-            Destroy(gameObject);
-            playerRb.gravityScale = 7;
-            playerRb.velocity = Vector3.zero;
-            ganchoActivo = false;
-        }
-
         if(deberiaMoverse)
-            transform.Translate(new Vector2(0f, 20f) * Time.deltaTime);
-
-        if (ganchoActivo) {
-            player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, moveSpeed * Time.deltaTime);
-            playerRb.gravityScale = 0;
-
-        }
+            transform.Translate(new Vector2(0f, moveSpeedGuadaña) * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,8 +62,17 @@ public class GanchoScript : MonoBehaviour
         {
             ganchoActivo = true;
             transform.Translate(Vector3.zero);
-            deberiaMoverse = false;
+            //Este invoke hace que cuando choca contra una pared, pueda meterse un poco dentro de la textura haciendo asi que eva pueda acercarse mas a la pared donde ha chocado
+            Invoke("StopMovingDelay", .03f);
             hit = true;
+        }
+        //En vez de que a cierta distancia del player desaparezca, que cuando el colider choca con el de la guadaña, desaparezca
+        if(collision.gameObject == player)
+        {
+            Destroy(gameObject);
+            playerRb.gravityScale = 7;
+            playerRb.velocity = Vector3.zero;
+            ganchoActivo = false;
         }
     }
 
@@ -63,5 +83,14 @@ public class GanchoScript : MonoBehaviour
 
         player.GetComponent<Rigidbody2D>().gravityScale = 7;
     }
-   
+    
+    void StopMovingDelay()
+    {
+        deberiaMoverse = false;
+    }
+
+    void StopIgnoringPlayer()
+    {
+        Physics2D.IgnoreLayerCollision(12, 9, false);
+    }
 }
