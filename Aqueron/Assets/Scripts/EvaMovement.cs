@@ -12,6 +12,7 @@ public class EvaMovement : MonoBehaviour {
 
     private float move;
     private int groundLayer;
+    private float width;
 
     [HideInInspector] public bool isGrounded;
     private bool jump;
@@ -23,7 +24,12 @@ public class EvaMovement : MonoBehaviour {
     [Range(0, 10f)] [SerializeField] private float velocidad = 4f;
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;
     private Vector3 velocity = Vector3.zero;
+    LayerMask ground;
 
+    private GameObject guadaña;
+    private GameObject colgandoHand;
+    private GameObject guadañaPosicionInicial;
+    private bool colgado;
 
 
 
@@ -34,6 +40,13 @@ public class EvaMovement : MonoBehaviour {
         //Layer suelo
         groundLayer = LayerMask.NameToLayer("Ground");
         Instance = this;
+        width = gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
+        ground = 1 << LayerMask.NameToLayer("Ground");
+        guadaña = GameObject.FindGameObjectWithTag("Guadaña");
+        colgandoHand = GameObject.FindGameObjectWithTag("ColgandoHand");
+        guadañaPosicionInicial = GameObject.FindGameObjectWithTag("GuadañaPosicionInicial");
+        colgado = true;
+        guadaña.transform.position = guadañaPosicionInicial.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -48,8 +61,25 @@ public class EvaMovement : MonoBehaviour {
         {
             jump = true;
         }
-       
-	}
+
+        Vector2 groundPos = transform.position + transform.right * width;
+        Vector2 vec2 = Tovector2(transform.right) * -.02f;
+        bool tocandoPared = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
+        Debug.DrawLine(groundPos, groundPos + vec2);
+        if (tocandoPared && !isGrounded && colgado)
+        {
+            animator.SetBool("Colgando", true);
+            guadaña.transform.position = colgandoHand.transform.position;
+            colgado = false;
+        }
+        else if (!tocandoPared && !isGrounded && !colgado)
+        {
+            animator.SetBool("Colgando", false);
+            guadaña.transform.position = guadañaPosicionInicial.transform.position;
+            colgado = true;
+        }
+
+    }
 
     private void FixedUpdate()
     {
@@ -74,7 +104,6 @@ public class EvaMovement : MonoBehaviour {
 
         if (isGrounded == false) animator.SetBool("Falling", true);
         else animator.SetBool("Falling", false);
-            
     }
 
     //Metodo flipeo sprite
@@ -93,6 +122,8 @@ public class EvaMovement : MonoBehaviour {
             isGrounded = true;
             //Esto es para cuando se usa el gancho para que eva deje de pegarse a las paredes si no usa el gancho despues de tocar el suelo
             circleCollider.sharedMaterial = normalMaterial;
+            animator.SetBool("Colgando", false);
+            guadaña.transform.position = guadañaPosicionInicial.transform.position;
         }
         
     }
@@ -103,5 +134,10 @@ public class EvaMovement : MonoBehaviour {
         {
             isGrounded = false;
         }
+    }
+
+
+    private Vector3 Tovector2(Vector3 vec3) {
+        return new Vector2(vec3.x, vec3.y);
     }
 }
