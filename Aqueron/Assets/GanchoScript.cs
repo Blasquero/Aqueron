@@ -94,12 +94,15 @@ public class GanchoScript : MonoBehaviour
         if(collision.gameObject == player)
         {
             Destroy(gameObject);
+            //Cuando eva llega, la gravedad se pone a esto y luego en EvaMovement, va aumentando hasta que toca suelo y vuelve a 7
             playerRb.gravityScale = 7;
             playerRb.velocity = Vector3.zero;
             ganchoActivo = false;
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
             EvaMovement.Instance.enabled = true;
+            //Cuando lanza el gancho, cambia el material de eva haciendo que se adiera a las paredes, en EvaMovement al detectar suelo, devuelve el material original
+            EvaMovement.Instance.circleCollider.sharedMaterial = EvaMovement.Instance.stickyMaterial;
         }
     }
 

@@ -8,7 +8,6 @@ public class EvaGanchoScript : MonoBehaviour
     public Transform ganchoTrans;
     private bool attackDone;
     private GameObject guadaña;
-    public PhysicsMaterial2D stickyMaterial;
 
     private void Start()
     {
@@ -31,8 +30,6 @@ public class EvaGanchoScript : MonoBehaviour
 
             //Cuando lanzas el gancho, eva no puede moverse
             gameObject.GetComponent<EvaMovement>().enabled = false;
-            //Cuando lanza el gancho, cambia el material de eva haciendo que se adiera a las paredes, en EvaMovement al detectar suelo, devuelve el material original
-            EvaMovement.Instance.circleCollider.sharedMaterial = stickyMaterial;
         }
     }
     

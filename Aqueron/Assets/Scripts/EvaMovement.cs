@@ -9,6 +9,7 @@ public class EvaMovement : MonoBehaviour {
     private Animator animator;
     public Collider2D circleCollider;
     public PhysicsMaterial2D normalMaterial;
+    public PhysicsMaterial2D stickyMaterial;
 
     private float move;
     private int groundLayer;
@@ -20,9 +21,11 @@ public class EvaMovement : MonoBehaviour {
     public static EvaMovement Instance;
 
     //Variables fuerzas
-    public float jumpForce = 1000f;
+    [Range(0, 0.05f)] [SerializeField] private float desliceVelocidad = 0.015f;
+    [SerializeField] private float jumpForce = 1000f;
     [Range(0, 10f)] [SerializeField] private float velocidad = 4f;
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;
+    [SerializeField] private float jumpForceColgandoHorizontal = 400f;
     private Vector3 velocity = Vector3.zero;
     LayerMask ground;
 
@@ -30,6 +33,12 @@ public class EvaMovement : MonoBehaviour {
     private GameObject colgandoHand;
     private GameObject guadañaPosicionInicial;
     private bool colgado;
+    private bool jumpAfterColgado;
+    private bool alreadyJumpedAfterColgado;
+    private bool doubleJump;
+    private bool alreadyDoubleJumped;
+    private bool airControl;
+    private bool aumentoDeslice;
 
 
 
@@ -51,6 +60,11 @@ public class EvaMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //Detector de si hay una pared delante de eva 
+        Vector2 groundPos = transform.position + transform.right * width;
+        Vector2 vec2 = Tovector2(transform.right) * -.02f;
+        bool tocandoPared = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
+        Debug.DrawLine(groundPos, groundPos + vec2);
         //Input movimiento horizontal
         move = Input.GetAxisRaw("Horizontal");
         //Switcheo entre animacion de idle y run
@@ -58,30 +72,47 @@ public class EvaMovement : MonoBehaviour {
         if (move == 0) animator.SetFloat("Speed", 0f);
 
         //Input salto
-        if(Input.GetButtonDown("Jump"))
+        //El isGrounded es para que cuando esta colgando de la pared, si pulsas 2 veces jump, cuando toque el suelo no vuelva a saltar
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            airControl = true;
             jump = true;
         }
+        //Double salto
+        if (Input.GetButtonDown("Jump") && !isGrounded && !tocandoPared && !alreadyDoubleJumped)
+        {
+            doubleJump = true;
+            alreadyDoubleJumped = true;
+            airControl = true;
+        }
 
-        //Detector de si hay una pared delante de eva 
-        Vector2 groundPos = transform.position + transform.right * width;
-        Vector2 vec2 = Tovector2(transform.right) * -.02f;
-        bool tocandoPared = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
-        Debug.DrawLine(groundPos, groundPos + vec2);
+        //Activacion de salto de Eva cuando esta colgando en la pared y que solo pueda hacerlo una vez y solo cuando haya hecho 
+        //el gancho antes(cuando el material cambie a sticky)
+        if (tocandoPared && Input.GetButtonDown("Jump") && !isGrounded && !alreadyJumpedAfterColgado 
+            && circleCollider.sharedMaterial != normalMaterial)
+        {
+            jumpAfterColgado = true;
+            alreadyJumpedAfterColgado = true;
+            airControl = false;
+        }
 
-        //animacion de colgado en la pared
+        //Cuando eva esta colgando en la pared despues del gancho
         if (tocandoPared && !isGrounded && colgado)
         {
-            animator.SetBool("Colgando", true); 
+            animator.SetBool("Colgando", true);
+            animator.SetBool("Jump", false);
             guadaña.transform.position = colgandoHand.transform.position;
             colgado = false;
+            aumentoDeslice = true;
         }
-        //Cuando deja de tocar la pared en el aire deja de hacer la animacion de colgado
+        //Cuando deja de tocar la pared pero sigue en el aire
         else if (!tocandoPared && !isGrounded && !colgado)
         {
             animator.SetBool("Colgando", false);
             guadaña.transform.position = guadañaPosicionInicial.transform.position;
             colgado = true;
+            rb.gravityScale = 7;
+            aumentoDeslice = false;
         }
         //Cuando salta hacia arriba pegada a un muro no hace la animacion de deslice hacia arriba
         if(rb.velocity.y > 0) animator.SetBool("Colgando", false);
@@ -90,27 +121,49 @@ public class EvaMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        //Movimiento horizontal con smoothing
+        //Movimiento horizontal con smoothing y airControl, en caso del salto despues de estar colgado no nos interesa que eva pueda moverse
+        //en el aire hasta que pulsa el doble salto otra vez
+        if (airControl) { 
         Vector3 playerVelocity = new Vector2(move * velocidad, rb.velocity.y);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, playerVelocity, ref velocity, m_MovementSmoothing);
+         }
 
         //Flipeo del sprite 
-        if (move > 0 && facingRight) Flip();
-        else if (move < 0 && !facingRight) Flip();
+        if (move > 0 && facingRight && airControl) Flip();
+        else if (move < 0 && !facingRight && airControl) Flip();
 
-        //Salto 
-        if (jump == true && isGrounded == true)
+        //Salto y doble salto
+        if (jump || doubleJump)
         {
+            if (doubleJump) rb.velocity = Vector3.zero;
             rb.AddForce(new Vector2(0f, jumpForce));
             animator.SetBool("Jump", true);
             jump = false;
-        } else if (jump == false && isGrounded == true)
+            doubleJump = false;
+        } 
+
+        //Animacion caida sin que pulsar salto antes
+        if (!isGrounded) animator.SetBool("Falling", true);
+        else animator.SetBool("Falling", false);
+
+        //Salto cuando esta colgando de pared que hace que vaya en direccion contraria a esta
+        if(jumpAfterColgado && move > 0)
         {
-            animator.SetBool("Jump", false);
+            rb.velocity = Vector3.zero;
+            rb.AddForce(new Vector2(-jumpForceColgandoHorizontal, jumpForce));
+            animator.SetBool("Jump", true);
+            jumpAfterColgado = false;
+            Flip();
+        } else if(jumpAfterColgado && move < 0)
+        {
+            rb.velocity = Vector3.zero;
+            rb.AddForce(new Vector2(jumpForceColgandoHorizontal, jumpForce));
+            animator.SetBool("Jump", true);
+            jumpAfterColgado = false;
+            Flip();
         }
 
-        if (isGrounded == false) animator.SetBool("Falling", true);
-        else animator.SetBool("Falling", false);
+        if (aumentoDeslice) rb.gravityScale += desliceVelocidad;
     }
 
     //Metodo flipeo sprite
@@ -130,7 +183,14 @@ public class EvaMovement : MonoBehaviour {
             //Esto es para cuando se usa el gancho para que eva deje de pegarse a las paredes si no usa el gancho despues de tocar el suelo
             circleCollider.sharedMaterial = normalMaterial;
             animator.SetBool("Colgando", false);
+            animator.SetBool("Jump", false);
             guadaña.transform.position = guadañaPosicionInicial.transform.position;
+            alreadyJumpedAfterColgado = false;
+            alreadyDoubleJumped = false;
+            //Recuperamos el control de movimiento siempre que toquemos el suelo
+            airControl = true;
+            aumentoDeslice = false;
+            rb.gravityScale = 7;
         }
         
     }
