@@ -7,6 +7,7 @@ public class EvaMovement : MonoBehaviour {
     //Variables componentes
     private Rigidbody2D rb;
     private Animator animator;
+    public GameObject LlamaSalto;
     public Collider2D circleCollider;
     public PhysicsMaterial2D normalMaterial;
     public PhysicsMaterial2D stickyMaterial;
@@ -81,9 +82,11 @@ public class EvaMovement : MonoBehaviour {
         //Double salto
         if (Input.GetButtonDown("Jump") && !isGrounded && !tocandoPared && !alreadyDoubleJumped)
         {
+            animator.SetBool("DobleSalto", true);
             doubleJump = true;
             alreadyDoubleJumped = true;
             airControl = true;
+            LlamaSalto.SetActive(true);
         }
 
         //Activacion de salto de Eva cuando esta colgando en la pared y que solo pueda hacerlo una vez y solo cuando haya hecho 
@@ -184,6 +187,7 @@ public class EvaMovement : MonoBehaviour {
             circleCollider.sharedMaterial = normalMaterial;
             animator.SetBool("Colgando", false);
             animator.SetBool("Jump", false);
+            animator.SetBool("DobleSalto", false);
             guadaña.transform.position = guadañaPosicionInicial.transform.position;
             alreadyJumpedAfterColgado = false;
             alreadyDoubleJumped = false;
@@ -206,5 +210,10 @@ public class EvaMovement : MonoBehaviour {
     //Metodo para pasar vectores3 a vectores2, bueno para cuando queremos hacer un linecast horizontal para pasar el transform.right a ser vector2
     private Vector3 Tovector2(Vector3 vec3) {
         return new Vector2(vec3.x, vec3.y);
+    }
+
+    public void DobleSaltoFinish()
+    {
+        animator.SetBool("DobleSalto", false);
     }
 }
