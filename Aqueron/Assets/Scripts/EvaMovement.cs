@@ -56,28 +56,35 @@ public class EvaMovement : MonoBehaviour {
         //Switcheo entre animacion de idle y run
         if (move != 0) animator.SetFloat("Speed", 1f);
         if (move == 0) animator.SetFloat("Speed", 0f);
+
         //Input salto
         if(Input.GetButtonDown("Jump"))
         {
             jump = true;
         }
 
+        //Detector de si hay una pared delante de eva 
         Vector2 groundPos = transform.position + transform.right * width;
         Vector2 vec2 = Tovector2(transform.right) * -.02f;
         bool tocandoPared = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
         Debug.DrawLine(groundPos, groundPos + vec2);
+
+        //animacion de colgado en la pared
         if (tocandoPared && !isGrounded && colgado)
         {
-            animator.SetBool("Colgando", true);
+            animator.SetBool("Colgando", true); 
             guadaña.transform.position = colgandoHand.transform.position;
             colgado = false;
         }
+        //Cuando deja de tocar la pared en el aire deja de hacer la animacion de colgado
         else if (!tocandoPared && !isGrounded && !colgado)
         {
             animator.SetBool("Colgando", false);
             guadaña.transform.position = guadañaPosicionInicial.transform.position;
             colgado = true;
         }
+        //Cuando salta hacia arriba pegada a un muro no hace la animacion de deslice hacia arriba
+        if(rb.velocity.y > 0) animator.SetBool("Colgando", false);
 
     }
 
@@ -136,7 +143,7 @@ public class EvaMovement : MonoBehaviour {
         }
     }
 
-
+    //Metodo para pasar vectores3 a vectores2, bueno para cuando queremos hacer un linecast horizontal para pasar el transform.right a ser vector2
     private Vector3 Tovector2(Vector3 vec3) {
         return new Vector2(vec3.x, vec3.y);
     }
