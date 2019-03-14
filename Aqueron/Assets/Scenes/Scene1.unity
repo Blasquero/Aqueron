@@ -486,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbb2103005b8a740a5d191f72c2f75e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LlamaSalto: {fileID: 383353635380443116}
+  llamaSalto: {fileID: 383353635380443116}
   circleCollider: {fileID: 365847532}
   normalMaterial: {fileID: 6200000, guid: d95375c155435ac488e111015a3aa992, type: 2}
   stickyMaterial: {fileID: 6200000, guid: e9d20437f6a005640899fe1ade6b3e43, type: 2}
@@ -496,6 +496,7 @@ MonoBehaviour:
   velocidad: 7
   m_MovementSmoothing: 0.05
   jumpForceColgandoHorizontal: 400
+  doubleJumpForce: 700
 --- !u!58 &365847532
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -525,7 +526,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.10717869, y: -0.9589606}
+  m_Offset: {x: -0.10717869, y: -0.9282662}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -536,7 +537,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15678978, y: 0.1854657}
+  m_Size: {x: 0.15678978, y: 0.12407696}
   m_EdgeRadius: 0
 --- !u!95 &365847534
 Animator:
@@ -3802,7 +3803,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &383353635380443117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3831,7 +3832,7 @@ PrefabInstance:
     - target: {fileID: 383353635380443116, guid: 747f9f48a7e3ac74f9c1fe6247f6b030,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8716039963773806461, guid: 747f9f48a7e3ac74f9c1fe6247f6b030,
         type: 3}

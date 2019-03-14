@@ -7,7 +7,7 @@ public class EvaMovement : MonoBehaviour {
     //Variables componentes
     private Rigidbody2D rb;
     private Animator animator;
-    public GameObject LlamaSalto;
+    public GameObject llamaSalto;
     public Collider2D circleCollider;
     public PhysicsMaterial2D normalMaterial;
     public PhysicsMaterial2D stickyMaterial;
@@ -29,6 +29,7 @@ public class EvaMovement : MonoBehaviour {
     [SerializeField] private float jumpForceColgandoHorizontal = 400f;
     private Vector3 velocity = Vector3.zero;
     LayerMask ground;
+    public float doubleJumpForce = 700f;
 
     private GameObject guadaña;
     private GameObject colgandoHand;
@@ -57,6 +58,7 @@ public class EvaMovement : MonoBehaviour {
         guadañaPosicionInicial = GameObject.FindGameObjectWithTag("GuadañaPosicionInicial");
         colgado = true;
         guadaña.transform.position = guadañaPosicionInicial.transform.position;
+        
 	}
 	
 	// Update is called once per frame
@@ -86,7 +88,7 @@ public class EvaMovement : MonoBehaviour {
             doubleJump = true;
             alreadyDoubleJumped = true;
             airControl = true;
-            LlamaSalto.SetActive(true);
+            llamaSalto.SetActive(true);
         }
 
         //Activacion de salto de Eva cuando esta colgando en la pared y que solo pueda hacerlo una vez y solo cuando haya hecho 
@@ -107,6 +109,7 @@ public class EvaMovement : MonoBehaviour {
             guadaña.transform.position = colgandoHand.transform.position;
             colgado = false;
             aumentoDeslice = true;
+            llamaSalto.SetActive(false);
         }
         //Cuando deja de tocar la pared pero sigue en el aire
         else if (!tocandoPared && !isGrounded && !colgado)
@@ -139,7 +142,13 @@ public class EvaMovement : MonoBehaviour {
         if (jump || doubleJump)
         {
             if (doubleJump) rb.velocity = Vector3.zero;
-            rb.AddForce(new Vector2(0f, jumpForce));
+            if(jump) Invoke("DelaySalto", 0.15f);
+            if (doubleJump)
+            {
+                rb.gravityScale = 3;
+                rb.AddForce(new Vector2(0f, doubleJumpForce));
+            }
+            //rb.AddForce(new Vector2(0f, jumpForce));
             animator.SetBool("Jump", true);
             jump = false;
             doubleJump = false;
@@ -195,6 +204,7 @@ public class EvaMovement : MonoBehaviour {
             airControl = true;
             aumentoDeslice = false;
             rb.gravityScale = 7;
+            llamaSalto.SetActive(false);
         }
         
     }
@@ -215,5 +225,10 @@ public class EvaMovement : MonoBehaviour {
     public void DobleSaltoFinish()
     {
         animator.SetBool("DobleSalto", false);
+    }
+
+    void DelaySalto()
+    {
+        rb.AddForce(new Vector2(0f, jumpForce));
     }
 }
