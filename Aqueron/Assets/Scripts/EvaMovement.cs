@@ -36,7 +36,7 @@ public class EvaMovement : MonoBehaviour {
     private GameObject guadaña;
     private GameObject colgandoHand;
     private GameObject guadañaPosicionInicial;
-    private bool colgado;
+    public bool colgado;
     private bool jumpAfterColgado;
     private bool alreadyJumpedAfterColgado;
     private bool doubleJump;
@@ -61,7 +61,7 @@ public class EvaMovement : MonoBehaviour {
         colgandoHand = GameObject.FindGameObjectWithTag("ColgandoHand");
         guadañaPosicionInicial = GameObject.FindGameObjectWithTag("GuadañaPosicionInicial");
         colgado = true;
-        guadaña.transform.position = guadañaPosicionInicial.transform.position;
+      //  guadaña.transform.position = guadañaPosicionInicial.transform.position;
         
 	}
 	
@@ -113,7 +113,7 @@ public class EvaMovement : MonoBehaviour {
         {
             animator.SetBool("Colgando", true);
             animator.SetBool("Jump", false);
-            guadaña.transform.position = colgandoHand.transform.position;
+          //  guadaña.transform.position = colgandoHand.transform.position;
             colgado = false;
             aumentoDeslice = true;
             llamaSalto.SetActive(false);
@@ -122,7 +122,7 @@ public class EvaMovement : MonoBehaviour {
         else if (!tocandoPared && !isGrounded && !colgado)
         {
             animator.SetBool("Colgando", false);
-            guadaña.transform.position = guadañaPosicionInicial.transform.position;
+          //      guadaña.transform.position = guadañaPosicionInicial.transform.position;
             colgado = true;
             rb.gravityScale = 7;
             aumentoDeslice = false;
@@ -205,7 +205,7 @@ public class EvaMovement : MonoBehaviour {
             animator.SetBool("Colgando", false);
             animator.SetBool("Jump", false);
             animator.SetBool("DobleSalto", false);
-            guadaña.transform.position = guadañaPosicionInicial.transform.position;
+            //guadaña.transform.position = guadañaPosicionInicial.transform.position;
             alreadyJumpedAfterColgado = false;
             alreadyDoubleJumped = false;
             //Recuperamos el control de movimiento siempre que toquemos el suelo

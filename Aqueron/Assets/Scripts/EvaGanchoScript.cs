@@ -11,7 +11,7 @@ public class EvaGanchoScript : MonoBehaviour
 
     private void Start()
     {
-        guadaña = GameObject.FindGameObjectWithTag("Guadaña");    
+        guadaña = GameObject.FindGameObjectWithTag("Guadaña");
     }
 
     void Update()
@@ -36,6 +36,7 @@ public class EvaGanchoScript : MonoBehaviour
     //Metodo para usar en invoke para cooldown entre ganchos
     void AttackDone() {
         attackDone = false;
+      
     }
 
 }
