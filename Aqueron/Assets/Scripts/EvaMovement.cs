@@ -11,9 +11,11 @@ public class EvaMovement : MonoBehaviour {
     public Collider2D circleCollider;
     public PhysicsMaterial2D normalMaterial;
     public PhysicsMaterial2D stickyMaterial;
+    public PhysicsMaterial2D superStickyMaterial;
 
     private float move;
     private int groundLayer;
+    private int rampaLayer;
     private float width;
 
     [HideInInspector] public bool isGrounded;
@@ -41,6 +43,7 @@ public class EvaMovement : MonoBehaviour {
     private bool alreadyDoubleJumped;
     private bool airControl;
     private bool aumentoDeslice;
+    private bool isOnRampa;
 
 
 
@@ -50,6 +53,7 @@ public class EvaMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
         //Layer suelo
         groundLayer = LayerMask.NameToLayer("Ground");
+        rampaLayer = LayerMask.NameToLayer("Rampas");
         Instance = this;
         width = gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
         ground = 1 << LayerMask.NameToLayer("Ground");
@@ -73,6 +77,9 @@ public class EvaMovement : MonoBehaviour {
         //Switcheo entre animacion de idle y run
         if (move != 0) animator.SetFloat("Speed", 1f);
         if (move == 0) animator.SetFloat("Speed", 0f);
+
+        if(move != 0 && isOnRampa) circleCollider.sharedMaterial = normalMaterial;
+        if(move == 0 && isOnRampa) circleCollider.sharedMaterial = superStickyMaterial;
 
         //Input salto
         //El isGrounded es para que cuando esta colgando de la pared, si pulsas 2 veces jump, cuando toque el suelo no vuelva a saltar
@@ -142,7 +149,7 @@ public class EvaMovement : MonoBehaviour {
         if (jump || doubleJump)
         {
             if (doubleJump) rb.velocity = Vector3.zero;
-            if(jump) Invoke("DelaySalto", 0.15f);
+            if(jump) rb.AddForce(new Vector2(0f, jumpForce));
             if (doubleJump)
             {
                 rb.gravityScale = 3;
@@ -189,11 +196,12 @@ public class EvaMovement : MonoBehaviour {
     //Deteccion de isGrounded
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       if(collision.gameObject.layer == groundLayer)
+       if(collision.gameObject.layer == groundLayer || collision.gameObject.layer == rampaLayer)
         {
             isGrounded = true;
             //Esto es para cuando se usa el gancho para que eva deje de pegarse a las paredes si no usa el gancho despues de tocar el suelo
-            circleCollider.sharedMaterial = normalMaterial;
+            if(collision.gameObject.layer == groundLayer) circleCollider.sharedMaterial = normalMaterial;
+            if (collision.gameObject.layer == rampaLayer) isOnRampa = true;
             animator.SetBool("Colgando", false);
             animator.SetBool("Jump", false);
             animator.SetBool("DobleSalto", false);
@@ -211,8 +219,10 @@ public class EvaMovement : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == groundLayer)
+        if (collision.gameObject.layer == groundLayer ) isGrounded = false;
+        if (collision.gameObject.layer == rampaLayer)
         {
+            isOnRampa = false;
             isGrounded = false;
         }
     }
