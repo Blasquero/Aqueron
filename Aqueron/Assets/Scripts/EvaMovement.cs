@@ -33,9 +33,7 @@ public class EvaMovement : MonoBehaviour {
     LayerMask ground;
     public float doubleJumpForce = 700f;
 
-    private GameObject guadaña;
     private GameObject colgandoHand;
-    private GameObject guadañaPosicionInicial;
     public bool colgado;
     private bool jumpAfterColgado;
     private bool alreadyJumpedAfterColgado;
@@ -57,9 +55,7 @@ public class EvaMovement : MonoBehaviour {
         Instance = this;
         width = gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
         ground = 1 << LayerMask.NameToLayer("Ground");
-        guadaña = GameObject.FindGameObjectWithTag("Guadaña");
         colgandoHand = GameObject.FindGameObjectWithTag("ColgandoHand");
-        guadañaPosicionInicial = GameObject.FindGameObjectWithTag("GuadañaPosicionInicial");
         colgado = true;
       //  guadaña.transform.position = guadañaPosicionInicial.transform.position;
         
