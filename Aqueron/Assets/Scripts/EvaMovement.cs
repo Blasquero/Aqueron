@@ -56,13 +56,13 @@ public class EvaMovement : MonoBehaviour {
         width = gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
         ground = 1 << LayerMask.NameToLayer("Ground");
         colgandoHand = GameObject.FindGameObjectWithTag("ColgandoHand");
-        colgado = true;
+        colgado = false;
       //  guadaña.transform.position = guadañaPosicionInicial.transform.position;
         
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         //Detector de si hay una pared delante de eva 
         Vector2 groundPos = transform.position + transform.right * width;
         Vector2 vec2 = Tovector2(transform.right) * -.02f;
@@ -74,8 +74,8 @@ public class EvaMovement : MonoBehaviour {
         if (move != 0) animator.SetFloat("Speed", 1f);
         if (move == 0) animator.SetFloat("Speed", 0f);
 
-        if(move != 0 && isOnRampa) circleCollider.sharedMaterial = normalMaterial;
-        if(move == 0 && isOnRampa) circleCollider.sharedMaterial = superStickyMaterial;
+        if (move != 0 && isOnRampa) circleCollider.sharedMaterial = normalMaterial;
+        if (move == 0 && isOnRampa) circleCollider.sharedMaterial = superStickyMaterial;
 
         //Input salto
         //El isGrounded es para que cuando esta colgando de la pared, si pulsas 2 veces jump, cuando toque el suelo no vuelva a saltar
@@ -96,7 +96,7 @@ public class EvaMovement : MonoBehaviour {
 
         //Activacion de salto de Eva cuando esta colgando en la pared y que solo pueda hacerlo una vez y solo cuando haya hecho 
         //el gancho antes(cuando el material cambie a sticky)
-        if (tocandoPared && Input.GetButtonDown("Jump") && !isGrounded && !alreadyJumpedAfterColgado 
+        if (tocandoPared && Input.GetButtonDown("Jump") && !isGrounded && !alreadyJumpedAfterColgado
             && circleCollider.sharedMaterial != normalMaterial)
         {
             jumpAfterColgado = true;
@@ -105,27 +105,39 @@ public class EvaMovement : MonoBehaviour {
         }
 
         //Cuando eva esta colgando en la pared despues del gancho
-        if (tocandoPared && !isGrounded && colgado)
+        if (tocandoPared && !isGrounded && !colgado)
         {
+            FindObjectOfType<AudioManagerScript>().Play("DeslizandoseComienzo");
+            Invoke("DeslizandoseContinuo", 0.1f);
             animator.SetBool("Colgando", true);
             animator.SetBool("Jump", false);
-          //  guadaña.transform.position = colgandoHand.transform.position;
-            colgado = false;
+            colgado = true;
             aumentoDeslice = true;
             llamaSalto.SetActive(false);
         }
         //Cuando deja de tocar la pared pero sigue en el aire
-        else if (!tocandoPared && !isGrounded && !colgado)
+        else if (!tocandoPared && !isGrounded && colgado)
         {
             animator.SetBool("Colgando", false);
-          //      guadaña.transform.position = guadañaPosicionInicial.transform.position;
-            colgado = true;
+            colgado = false;
             rb.gravityScale = 7;
             aumentoDeslice = false;
-        }
-        //Cuando salta hacia arriba pegada a un muro no hace la animacion de deslice hacia arriba
-        if(rb.velocity.y > 0) animator.SetBool("Colgando", false);
+            FindObjectOfType<AudioManagerScript>().Stop("DeslizandoseContinuo");
+        } else if (tocandoPared && isGrounded && colgado)
+        {
+            FindObjectOfType<AudioManagerScript>().Stop("DeslizandoseContinuo");
+            colgado = false;
+        } 
 
+        //Cuando salta hacia arriba pegada a un muro no hace la animacion de deslice hacia arriba
+        if (rb.velocity.y > 0 ) animator.SetBool("Colgando", false);
+        //Cuando no esta haciendo la animacion, que no suene, para que cuando salta delante de la pared no suene sin hacer animacion
+        if(!animator.GetBool("Colgando"))
+        {          
+            FindObjectOfType<AudioManagerScript>().Stop("DeslizandoseComienzo");
+            FindObjectOfType<AudioManagerScript>().Stop("DeslizandoseContinuo");
+        }
+    
     }
 
     private void FixedUpdate()
@@ -201,7 +213,6 @@ public class EvaMovement : MonoBehaviour {
             animator.SetBool("Colgando", false);
             animator.SetBool("Jump", false);
             animator.SetBool("DobleSalto", false);
-            //guadaña.transform.position = guadañaPosicionInicial.transform.position;
             alreadyJumpedAfterColgado = false;
             alreadyDoubleJumped = false;
             //Recuperamos el control de movimiento siempre que toquemos el suelo
@@ -236,5 +247,16 @@ public class EvaMovement : MonoBehaviour {
     void DelaySalto()
     {
         rb.AddForce(new Vector2(0f, jumpForce));
+    }
+
+    public void DeslizandoseContinuo()
+    {
+        FindObjectOfType<AudioManagerScript>().Play("DeslizandoseContinuo");
+    }
+
+    //Metodo para poner el la animacion de colgado ya que es un loop y solo se va a escuchar el ultimo momento(cuando toca el suelo)
+    public void DeslizandoseFinal()
+    {
+        FindObjectOfType<AudioManagerScript>().Play("DeslizandoseFinal");
     }
 }
