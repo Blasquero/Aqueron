@@ -419,6 +419,26 @@ MonoBehaviour:
     volume: 0.5
     loop: 0
     source: {fileID: 0}
+  - name: DeslizandoseFinal
+    clip: {fileID: 8300000, guid: cba56ea8ed715214a8d3eb8ff9dba745, type: 3}
+    volume: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Steps
+    clip: {fileID: 8300000, guid: 8c07c739a65c5ff4b941b252f3079e3d, type: 3}
+    volume: 0.25
+    loop: 1
+    source: {fileID: 0}
+  - name: CoheteEncendiendose
+    clip: {fileID: 8300000, guid: d4598c3fbd8b48a4998685cda5f55f2d, type: 3}
+    volume: 0.25
+    loop: 0
+    source: {fileID: 0}
+  - name: CoheteEncendido
+    clip: {fileID: 8300000, guid: d4598c3fbd8b48a4998685cda5f55f2d, type: 3}
+    volume: 0.25
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &171906354
 Transform:
   m_ObjectHideFlags: 0

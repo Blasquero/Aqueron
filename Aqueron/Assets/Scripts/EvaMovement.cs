@@ -70,12 +70,15 @@ public class EvaMovement : MonoBehaviour {
         Debug.DrawLine(groundPos, groundPos + vec2);
         //Input movimiento horizontal
         move = Input.GetAxisRaw("Horizontal");
+        if (Input.GetButtonUp("Horizontal") || !isGrounded) FindObjectOfType<AudioManagerScript>().Stop("Steps");
         //Switcheo entre animacion de idle y run
         if (move != 0) animator.SetFloat("Speed", 1f);
         if (move == 0) animator.SetFloat("Speed", 0f);
 
         if (move != 0 && isOnRampa) circleCollider.sharedMaterial = normalMaterial;
         if (move == 0 && isOnRampa) circleCollider.sharedMaterial = superStickyMaterial;
+
+        
 
         //Input salto
         //El isGrounded es para que cuando esta colgando de la pared, si pulsas 2 veces jump, cuando toque el suelo no vuelva a saltar
@@ -92,6 +95,8 @@ public class EvaMovement : MonoBehaviour {
             alreadyDoubleJumped = true;
             airControl = true;
             llamaSalto.SetActive(true);
+            FindObjectOfType<AudioManagerScript>().Play("CoheteEncendiendose");
+            FindObjectOfType<AudioManagerScript>().Play("CoheteEncendido");
         }
 
         //Activacion de salto de Eva cuando esta colgando en la pared y que solo pueda hacerlo una vez y solo cuando haya hecho 
@@ -107,6 +112,8 @@ public class EvaMovement : MonoBehaviour {
         //Cuando eva esta colgando en la pared despues del gancho
         if (tocandoPared && !isGrounded && !colgado)
         {
+            FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendido");
+            FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendiendose");
             FindObjectOfType<AudioManagerScript>().Play("DeslizandoseComienzo");
             Invoke("DeslizandoseContinuo", 0.1f);
             animator.SetBool("Colgando", true);
@@ -220,6 +227,8 @@ public class EvaMovement : MonoBehaviour {
             aumentoDeslice = false;
             rb.gravityScale = 7;
             llamaSalto.SetActive(false);
+            FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendido");
+            FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendiendose");
         }
         
     }
@@ -258,5 +267,9 @@ public class EvaMovement : MonoBehaviour {
     public void DeslizandoseFinal()
     {
         FindObjectOfType<AudioManagerScript>().Play("DeslizandoseFinal");
+    }
+    public void StepsSonido()
+    {
+        FindObjectOfType<AudioManagerScript>().Play("Steps");
     }
 }
