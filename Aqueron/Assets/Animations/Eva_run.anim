@@ -91,8 +91,6 @@ AnimationClip:
       value: {fileID: 21300008, guid: e105ae355dd2d694b84df34a2203e4ea, type: 3}
     - time: 2.9166667
       value: {fileID: 21300010, guid: e105ae355dd2d694b84df34a2203e4ea, type: 3}
-    - time: 3
-      value: {fileID: 21300000, guid: e105ae355dd2d694b84df34a2203e4ea, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -148,13 +146,12 @@ AnimationClip:
     - {fileID: 21300006, guid: e105ae355dd2d694b84df34a2203e4ea, type: 3}
     - {fileID: 21300008, guid: e105ae355dd2d694b84df34a2203e4ea, type: 3}
     - {fileID: 21300010, guid: e105ae355dd2d694b84df34a2203e4ea, type: 3}
-    - {fileID: 21300000, guid: e105ae355dd2d694b84df34a2203e4ea, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 3.0833333
+    m_StopTime: 3
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -175,7 +172,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: StepsAudio
+    functionName: StepsSonido
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

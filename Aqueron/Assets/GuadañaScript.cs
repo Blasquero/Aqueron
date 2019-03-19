@@ -10,8 +10,10 @@ public class GuadañaScript : MonoBehaviour
     private GameObject colgandoHand;
     [SerializeField] private float delayGuadaña = 8f;
     // Start is called before the first frame update
+
     void Start()
     {
+        
         posicionInicial = GameObject.FindGameObjectWithTag("GuadañaPosicionInicial");
         playerAnim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         colgandoHand = GameObject.FindGameObjectWithTag("ColgandoHand");
@@ -23,8 +25,8 @@ public class GuadañaScript : MonoBehaviour
     {
         if (playerAnim.GetBool("Colgando") == false)
         {
-            if (posicionInicial.transform.eulerAngles.y < 180 && facingRight) Flip();
-            else if (posicionInicial.transform.eulerAngles.y > 180 && !facingRight) Flip();
+            if (posicionInicial.transform.eulerAngles.y < 179 && facingRight) Flip();
+            else if (posicionInicial.transform.eulerAngles.y > 179 && !facingRight) Flip();
             GetComponent<Animator>().enabled = true;
         } else if (playerAnim.GetBool("Colgando") == true)
         {

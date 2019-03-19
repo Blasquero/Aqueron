@@ -70,7 +70,7 @@ public class EvaMovement : MonoBehaviour {
         Debug.DrawLine(groundPos, groundPos + vec2);
         //Input movimiento horizontal
         move = Input.GetAxisRaw("Horizontal");
-        if (Input.GetButtonUp("Horizontal") || !isGrounded) FindObjectOfType<AudioManagerScript>().Stop("Steps");
+        if (move == 0 || !isGrounded) FindObjectOfType<AudioManagerScript>().Stop("Steps");
         //Switcheo entre animacion de idle y run
         if (move != 0) animator.SetFloat("Speed", 1f);
         if (move == 0) animator.SetFloat("Speed", 0f);
@@ -84,6 +84,7 @@ public class EvaMovement : MonoBehaviour {
         //El isGrounded es para que cuando esta colgando de la pared, si pulsas 2 veces jump, cuando toque el suelo no vuelva a saltar
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            FindObjectOfType<AudioManagerScript>().Play("Salto");
             airControl = true;
             jump = true;
         }
@@ -104,6 +105,7 @@ public class EvaMovement : MonoBehaviour {
         if (tocandoPared && Input.GetButtonDown("Jump") && !isGrounded && !alreadyJumpedAfterColgado
             && circleCollider.sharedMaterial != normalMaterial)
         {
+            FindObjectOfType<AudioManagerScript>().Play("Salto");
             jumpAfterColgado = true;
             alreadyJumpedAfterColgado = true;
             airControl = false;
@@ -112,9 +114,11 @@ public class EvaMovement : MonoBehaviour {
         //Cuando eva esta colgando en la pared despues del gancho
         if (tocandoPared && !isGrounded && !colgado)
         {
+            animator.SetBool("Gancho", false);
             FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendido");
             FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendiendose");
             FindObjectOfType<AudioManagerScript>().Play("DeslizandoseComienzo");
+            FindObjectOfType<AudioManagerScript>().Play("CaidaSalto");
             Invoke("DeslizandoseContinuo", 0.1f);
             animator.SetBool("Colgando", true);
             animator.SetBool("Jump", false);
@@ -144,7 +148,8 @@ public class EvaMovement : MonoBehaviour {
             FindObjectOfType<AudioManagerScript>().Stop("DeslizandoseComienzo");
             FindObjectOfType<AudioManagerScript>().Stop("DeslizandoseContinuo");
         }
-    
+       //Para que cuando se quede en un borde de una rampa y salte, no de bugs con la animacion de saltar ya que no resbala del borde y el trigger esta fuera de rango
+       if(!isGrounded && !colgado) circleCollider.sharedMaterial = normalMaterial;
     }
 
     private void FixedUpdate()
@@ -229,6 +234,8 @@ public class EvaMovement : MonoBehaviour {
             llamaSalto.SetActive(false);
             FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendido");
             FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendiendose");
+            FindObjectOfType<AudioManagerScript>().Play("CaidaSalto");
+            animator.SetBool("Gancho", false);
         }
         
     }

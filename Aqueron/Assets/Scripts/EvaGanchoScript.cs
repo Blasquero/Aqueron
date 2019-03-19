@@ -8,16 +8,20 @@ public class EvaGanchoScript : MonoBehaviour
     public Transform ganchoTrans;
     private bool attackDone;
     private GameObject guadaña;
+    private Animator animator;
 
     private void Start()
     {
         guadaña = GameObject.FindGameObjectWithTag("Guadaña");
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !attackDone)
+        if (Input.GetButtonDown("Vertical") && !attackDone)
         {
+            animator.SetBool("Gancho", true);
+            FindObjectOfType<AudioManagerScript>().Play("LanzarGancho");
             //Hace aparecer el gancho
             Instantiate(gancho, ganchoTrans.position, ganchoTrans.rotation);
             attackDone = true;

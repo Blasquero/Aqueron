@@ -87,6 +87,7 @@ public class GanchoScript : MonoBehaviour
     {
         if(collision.gameObject.layer == groundLayer || collision.gameObject.layer == rampaLayer)
         {
+            FindObjectOfType<AudioManagerScript>().Play("ImpactoGancho");
             ganchoActivo = true;
             transform.Translate(Vector3.zero);
             //Este invoke hace que cuando choca contra una pared, pueda meterse un poco dentro de la textura haciendo asi que eva pueda acercarse mas a la pared donde ha chocado
