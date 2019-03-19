@@ -61,12 +61,12 @@ public class GanchoScript : MonoBehaviour
         }
 
         //Cuando eva lanza la guadaña, cae lentamente (le pongo el ganchoAereo para que solo le afecte una vez y no todo el rato lo cual haria un descenso raro)
-        if (gameObject != null && !EvaMovement.Instance.isGrounded && ganchoAereo)
+  /*      if (gameObject != null && !EvaMovement.Instance.isGrounded && ganchoAereo)
         {
             playerRb.gravityScale = 4;
             playerRb.velocity = Vector3.zero;
             ganchoAereo = false;
-        }
+        }*/
     }
 
     private void Update()
@@ -94,6 +94,7 @@ public class GanchoScript : MonoBehaviour
             Invoke("StopMovingDelay", .03f);
             hit = true;
             Invoke("AutoDestruccionCuandoBug", 1f);
+            player.GetComponent<Animator>().SetBool("Gancho", false);
         }
         //En vez de que a cierta distancia del player desaparezca, que cuando el colider choca con el de la guadaña, desaparezca
         if(collision.gameObject == player)
@@ -123,6 +124,7 @@ public class GanchoScript : MonoBehaviour
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
             EvaMovement.Instance.enabled = true;
+            player.GetComponent<Animator>().SetBool("Gancho", false);
         }
     }
     

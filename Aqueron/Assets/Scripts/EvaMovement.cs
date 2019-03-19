@@ -42,6 +42,7 @@ public class EvaMovement : MonoBehaviour {
     private bool airControl;
     private bool aumentoDeslice;
     private bool isOnRampa;
+    private bool landed;
 
 
 
@@ -70,7 +71,7 @@ public class EvaMovement : MonoBehaviour {
         Debug.DrawLine(groundPos, groundPos + vec2);
         //Input movimiento horizontal
         move = Input.GetAxisRaw("Horizontal");
-        if (move == 0 || !isGrounded) FindObjectOfType<AudioManagerScript>().Stop("Steps");
+        if (move == 0 || !isGrounded || animator.GetBool("Jump") == true) FindObjectOfType<AudioManagerScript>().Stop("Steps");
         //Switcheo entre animacion de idle y run
         if (move != 0) animator.SetFloat("Speed", 1f);
         if (move == 0) animator.SetFloat("Speed", 0f);
@@ -169,7 +170,7 @@ public class EvaMovement : MonoBehaviour {
         if (jump || doubleJump)
         {
             if (doubleJump) rb.velocity = Vector3.zero;
-            if(jump) rb.AddForce(new Vector2(0f, jumpForce));
+            if (jump) Invoke("DelaySalto", .2f); //rb.AddForce(new Vector2(0f, jumpForce));
             if (doubleJump)
             {
                 rb.gravityScale = 3;
@@ -236,13 +237,18 @@ public class EvaMovement : MonoBehaviour {
             FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendiendose");
             FindObjectOfType<AudioManagerScript>().Play("CaidaSalto");
             animator.SetBool("Gancho", false);
+            animator.SetBool("Landed", true);
+            Invoke("LandedAnim", 0.4f);
+
         }
         
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == groundLayer ) isGrounded = false;
+        if (collision.gameObject.layer == groundLayer ) {
+            isGrounded = false;
+        }
         if (collision.gameObject.layer == rampaLayer)
         {
             isOnRampa = false;
@@ -278,5 +284,9 @@ public class EvaMovement : MonoBehaviour {
     public void StepsSonido()
     {
         FindObjectOfType<AudioManagerScript>().Play("Steps");
+    }
+    void LandedAnim()
+    {
+        animator.SetBool("Landed", false);
     }
 }
