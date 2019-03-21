@@ -8,6 +8,7 @@ TagManager:
   - Gancho
   - ColgandoHand
   - "Guada\xF1aPosicionInicial"
+  - Vcam
   layers:
   - Default
   - TransparentFX

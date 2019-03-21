@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GanchoScript : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class GanchoScript : MonoBehaviour
     private int rampaLayer;
     private int guadañaLayer;
     private bool colgando;
-
+    private Animator animator;
+    private CinemachineVirtualCamera vcam;
     
 
     private GameObject guadaña;
@@ -43,10 +45,10 @@ public class GanchoScript : MonoBehaviour
         Invoke("AutoDestruccion", 0.35f);
         //Cuando spawnea el gancho, el colider del personaje no afecta
         Physics2D.IgnoreLayerCollision(guadañaLayer, playerLayer);
-        //Tras 0.5s, si que afecta el colider del personaje asi cuando llega hasta el, al haber chocado contra algo, triggea que desaparezca
-        Invoke("StopIgnoringPlayer", 0.5f);
         deberiaMoverse = true;
         rampaLayer = LayerMask.NameToLayer("Rampas");
+        animator = GetComponent<Animator>();
+        vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
     }
 
     private void FixedUpdate()
@@ -57,7 +59,8 @@ public class GanchoScript : MonoBehaviour
             player.transform.position = Vector2.MoveTowards(player.transform.position, transform.position, moveSpeedEva * Time.fixedDeltaTime);
             playerRb.gravityScale = 0;
             playerRb.velocity = Vector3.zero;
-
+            player.GetComponent<Animator>().SetBool("VolandoGancho", true);
+            animator.SetTrigger("GanchoActivo");
         }
 
         //Cuando eva lanza la guadaña, cae lentamente (le pongo el ganchoAereo para que solo le afecte una vez y no todo el rato lo cual haria un descenso raro)
@@ -81,6 +84,20 @@ public class GanchoScript : MonoBehaviour
             ganchoAereo = true;
             EvaMovement.Instance.enabled = true;
         }
+        if (EvaMovement.Instance.tocandoPared)
+        {
+            player.GetComponent<Animator>().SetBool("VolandoGancho", false);
+            Destroy(gameObject);
+            //Cuando eva llega, la gravedad se pone a esto y luego en EvaMovement, va aumentando hasta que toca suelo y vuelve a 7
+            playerRb.gravityScale = 5;
+            playerRb.velocity = Vector3.zero;
+            ganchoActivo = false;
+            colgando = true;
+            SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
+            guadañaRenderer.enabled = true;
+            guadaña.transform.position = GameObject.FindGameObjectWithTag("ColgandoHand").transform.position;
+            GameManagerScript.inputEnabled = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -95,22 +112,25 @@ public class GanchoScript : MonoBehaviour
             hit = true;
             Invoke("AutoDestruccionCuandoBug", 1f);
             player.GetComponent<Animator>().SetBool("Gancho", false);
+            Physics2D.IgnoreLayerCollision(12, 9, false);
+            vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 8f;
+            GameManagerScript.Instance.recolocarCamara = true;
+
         }
         //En vez de que a cierta distancia del player desaparezca, que cuando el colider choca con el de la guadaña, desaparezca
-        if(collision.gameObject == player)
+           if(collision.gameObject == player)
         {
+            player.GetComponent<Animator>().SetBool("VolandoGancho", false);
             Destroy(gameObject);
             //Cuando eva llega, la gravedad se pone a esto y luego en EvaMovement, va aumentando hasta que toca suelo y vuelve a 7
-            playerRb.gravityScale = 7;
+            player.GetComponent<Rigidbody2D>().gravityScale = 7;
             playerRb.velocity = Vector3.zero;
             ganchoActivo = false;
             colgando = true;
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
             guadaña.transform.position = GameObject.FindGameObjectWithTag("ColgandoHand").transform.position;
-            EvaMovement.Instance.enabled = true;
-            //Cuando lanza el gancho, cambia el material de eva haciendo que se adiera a las paredes, en EvaMovement al detectar suelo, devuelve el material original
-            EvaMovement.Instance.circleCollider.sharedMaterial = EvaMovement.Instance.stickyMaterial;
+            GameManagerScript.inputEnabled = true;
         }
     }
 
@@ -123,7 +143,7 @@ public class GanchoScript : MonoBehaviour
             player.GetComponent<Rigidbody2D>().gravityScale = 7;
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
-            EvaMovement.Instance.enabled = true;
+            GameManagerScript.inputEnabled = true;
             player.GetComponent<Animator>().SetBool("Gancho", false);
         }
     }
@@ -132,14 +152,15 @@ public class GanchoScript : MonoBehaviour
     {
         deberiaMoverse = false;
     }
-
-    void StopIgnoringPlayer()
-    {
-        Physics2D.IgnoreLayerCollision(12, 9, false);
-    }
-
     void AutoDestruccionCuandoBug()
     {
+        player.GetComponent<Rigidbody2D>().gravityScale = 7;
+        player.GetComponent<Animator>().SetBool("VolandoGancho", false);
         Destroy(gameObject);
+        player.GetComponent<Rigidbody2D>().gravityScale = 7;
+        SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
+        guadañaRenderer.enabled = true;
+        GameManagerScript.inputEnabled = true;
+        player.GetComponent<Animator>().SetBool("Gancho", false);
     }
 }

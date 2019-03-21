@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class EvaGanchoScript : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class EvaGanchoScript : MonoBehaviour
     private GameObject guadaña;
     private Animator animator;
     private Rigidbody2D rb;
-    
 
     private void Start()
     {
@@ -24,14 +24,15 @@ public class EvaGanchoScript : MonoBehaviour
         if (animator.GetBool("Falling") == true) FindObjectOfType<AudioManagerScript>().Stop("Steps");
         if (Input.GetButtonDown("Vertical") && !attackDone)
         {
+            animator.SetFloat("Speed", 0f);
             animator.SetBool("Gancho", true);
             animator.SetBool("Jump", false);
             Invoke("LanzarGancho", 0.20f);
             //Cuando lanzas el gancho, eva no puede moverse
             if (!EvaMovement.Instance.isGrounded)
             {
-                gameObject.GetComponent<EvaMovement>().enabled = false;
-                rb.gravityScale = 0.5f;
+                GameManagerScript.inputEnabled = false;
+                rb.gravityScale = 0f;
                 rb.velocity = Vector3.zero;
             }
             attackDone = true;

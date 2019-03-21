@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 692216455183138135}
   - component: {fileID: 692216455183138134}
   - component: {fileID: 985026045}
+  - component: {fileID: 8264686275985710016}
   m_Layer: 12
   m_Name: GanchoPrefab
   m_TagString: Untagged
@@ -94,7 +95,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.40472534, y: 0.49401322}
+  m_Offset: {x: 0.040526092, y: 0.46227473}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.49056605, y: 0.5}
@@ -105,7 +106,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.71265346, y: 0.9936473}
+  m_Size: {x: 1.5240239, y: 0.4238762}
   m_EdgeRadius: 0
 --- !u!114 &985026045
 MonoBehaviour:
@@ -121,3 +122,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   "moveSpeedGuada\xF1a": 20
   moveSpeedEva: 15
+--- !u!95 &8264686275985710016
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692216455183138133}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c04d3d092a38a41469236807f926d619, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
