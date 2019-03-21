@@ -11,13 +11,15 @@ public class doorScript : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        sensor = true;
+        if(collision.gameObject.tag == "Player")
+        anim.SetBool("sensor", true);
        
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        sensor = false;
+        if (collision.gameObject.tag == "Player")
+            anim.SetBool("sensor", false);
         
     }
 
@@ -27,9 +29,9 @@ public class doorScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+   /* void Update()
     {
-        anim.SetBool("locked",locked);
+        anim.SetBool("locked", locked);
         anim.SetBool("sensor", sensor);
-    }
+    }*/
 }
