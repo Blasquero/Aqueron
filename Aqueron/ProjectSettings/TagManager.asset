@@ -9,6 +9,7 @@ TagManager:
   - ColgandoHand
   - "Guada\xF1aPosicionInicial"
   - Vcam
+  - Enemy
   layers:
   - Default
   - TransparentFX
