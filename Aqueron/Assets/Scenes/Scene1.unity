@@ -260,7 +260,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 6.1096563, y: 6.468502}
+  m_Offset: {x: 5.311344, y: 6.468502}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -271,7 +271,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 41.700912, y: 23.872932}
+  m_Size: {x: 43.29754, y: 23.872932}
   m_EdgeRadius: 0
 --- !u!66 &126327779
 CompositeCollider2D:
@@ -295,17 +295,17 @@ CompositeCollider2D:
     m_ColliderPaths:
     - - X: 269601120
         Y: 184049680
-      - X: -147408000
+      - X: -163374256
         Y: 184049680
-      - X: -147408000
+      - X: -163374256
         Y: -54679640
       - X: 269601120
         Y: -54679640
   m_CompositePaths:
     m_Paths:
     - - {x: 26.960112, y: 18.404968}
-      - {x: -14.7408, y: 18.404968}
-      - {x: -14.7408, y: -5.467964}
+      - {x: -16.337425, y: 18.404968}
+      - {x: -16.337425, y: -5.467964}
       - {x: 26.960112, y: -5.467964}
   m_VertexDistance: 0.0005
 --- !u!50 &126327780
@@ -1465,7 +1465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626544077}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.74, y: 7.17, z: 0}
+  m_LocalPosition: {x: 11.6, y: 1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 403279710}
@@ -1802,7 +1802,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee56b7e889dafa4db78b10ecaeddc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facingRight: 0
 --- !u!50 &931506646
 Rigidbody2D:
   serializedVersion: 4
@@ -1811,14 +1810,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 931506644}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 7
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1925,7 +1924,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 931506644}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.74, y: 0.016, z: 0}
+  m_LocalPosition: {x: 18.91, y: 3.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1361609275}
@@ -5907,9 +5906,9 @@ GameObject:
   - component: {fileID: 1193946617}
   - component: {fileID: 1193946616}
   - component: {fileID: 1193946615}
-  m_Layer: 11
-  m_Name: puerta
-  m_TagString: Untagged
+  m_Layer: 8
+  m_Name: Puerta
+  m_TagString: LockedDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5945,8 +5944,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697fe57163d69314f9639997d844686c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locked: 0
-  sensor: 0
 --- !u!61 &1193946617
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6603,7 +6600,7 @@ GameObject:
   - component: {fileID: 1433833672}
   - component: {fileID: 1433833674}
   - component: {fileID: 1433833673}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: puerta (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

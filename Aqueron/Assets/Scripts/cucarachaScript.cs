@@ -10,7 +10,7 @@ public class cucarachaScript : MonoBehaviour
     private Rigidbody2D rb;
     //velocidad negativa porque el sprite está mirando hacia la izquierda
     private float velocity = -1f;
-    public bool facingRight;
+    private bool facingRight;
     void Start()
     {
         //Get Componentes

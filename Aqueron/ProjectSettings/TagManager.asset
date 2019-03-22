@@ -10,6 +10,8 @@ TagManager:
   - "Guada\xF1aPosicionInicial"
   - Vcam
   - Enemy
+  - LockedDoor
+  - UnlockedDoor
   layers:
   - Default
   - TransparentFX
