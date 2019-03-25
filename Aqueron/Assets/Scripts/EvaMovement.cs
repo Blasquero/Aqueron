@@ -169,7 +169,7 @@ public class EvaMovement : MonoBehaviour {
             FindObjectOfType<AudioManagerScript>().Stop("CoheteEncendiendose");
             llamaSalto.SetActive(false);
         }
-
+        if (!isGrounded) animator.SetBool("Landed", false); 
     }
 
     private void FixedUpdate()
@@ -189,7 +189,7 @@ public class EvaMovement : MonoBehaviour {
         if (jump || doubleJump)
         {
             if (doubleJump) rb.velocity = Vector3.zero;
-            if (jump) Invoke("DelaySalto", .2f); //rb.AddForce(new Vector2(0f, jumpForce));
+            if (jump) rb.AddForce(new Vector2(0f, jumpForce)); ; //rb.AddForce(new Vector2(0f, jumpForce));
             if (doubleJump)
             {
                 rb.gravityScale = 3;
@@ -308,4 +308,5 @@ public class EvaMovement : MonoBehaviour {
     {
         animator.SetBool("Landed", false);
     }
+
 }

@@ -7,7 +7,9 @@ public class cucarachaScript : MonoBehaviour
 
     private float width;
     LayerMask ground;
+    LayerMask puerta;
     private Rigidbody2D rb;
+    private bool isBlocked;
     //velocidad negativa porque el sprite está mirando hacia la izquierda
     private float velocity = -1f;
     private bool facingRight;
@@ -18,6 +20,7 @@ public class cucarachaScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         //Get Layer ground
         ground = 1 << LayerMask.NameToLayer("Ground");
+        puerta = 1 << LayerMask.NameToLayer("Puerta");
 
 
         // hilo de ataque
@@ -37,7 +40,9 @@ public class cucarachaScript : MonoBehaviour
         //LineCast vertical detecta si el enemigo esta tocando el suelo
         bool isGrounded = Physics2D.Linecast(groundPos, groundPos + Vector2.down * 3, ground);
         //Linecast horizontal detecta si el enemigo tiene un obstaculo delante
-        bool isBlocked = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
+        isBlocked = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
+        //Linecast horizontal detecta si el enemigo tiene una puerta delante
+        isBlocked = Physics2D.Linecast(groundPos, groundPos + vec2, puerta);
 
         //Movimiento constanate del enemigo sin aceleración
         Vector2 myVel = rb.velocity;
