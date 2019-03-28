@@ -35,7 +35,6 @@ public class ScytheBassicAttack : MonoBehaviour {
             if (evaMovement.isGrounded) {
                 GameManagerScript.inputEnabled = false;
                 animator.SetFloat("Speed", 0.0f);
-
                 Debug.Log("Ataque Iniciado");
                 attackEnabled = false;
                 Attack2();
@@ -44,8 +43,8 @@ public class ScytheBassicAttack : MonoBehaviour {
     }
 
     private void Attack2() {
+        scytheHitbox.enabled = true;
         animator.SetBool("Attack",true);
-        scytheHitbox.isTrigger = true;
         StartCoroutine("CheckEndAttack");
     }
 
@@ -71,8 +70,7 @@ public class ScytheBassicAttack : MonoBehaviour {
     void EndAttack() {
         animator.SetBool("Attack", false);
         Debug.Log("Ataque finalizado");
-        scytheHitbox.isTrigger = false;
-        GameManagerScript.inputEnabled = true;
+        scytheHitbox.enabled = false;
         Invoke("ActivateAttack", timeBetweenAttacks);
     }
 

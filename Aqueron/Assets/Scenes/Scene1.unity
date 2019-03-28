@@ -1784,6 +1784,7 @@ GameObject:
   - component: {fileID: 931506645}
   - component: {fileID: 931506652}
   - component: {fileID: 931506651}
+  - component: {fileID: 931506647}
   m_Layer: 11
   m_Name: cucaracha
   m_TagString: Enemy
@@ -6852,6 +6853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a01aa53120a7b44a37a4f5f83d7c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activo: 0
   eva: {fileID: 365847526}
   timeBetweenAttacks: 0
   scytheDamage: 0
@@ -6862,7 +6864,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454174430}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
