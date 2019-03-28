@@ -1782,7 +1782,8 @@ GameObject:
   - component: {fileID: 931506648}
   - component: {fileID: 931506646}
   - component: {fileID: 931506645}
-  - component: {fileID: 931506647}
+  - component: {fileID: 931506652}
+  - component: {fileID: 931506651}
   m_Layer: 11
   m_Name: cucaracha
   m_TagString: Enemy
@@ -1931,6 +1932,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &931506651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931506644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9331a228c1e13c14eb16853085a2ddf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iTime: 1
+  activateTest: 0
+--- !u!114 &931506652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931506644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a166a88b9a855d14a97a11d86f14c8f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealt: 0
+  health: 10
+  maxDamage: 0
+  damage: 0
+  maxSpeed: 0
+  speed: 0
 --- !u!1 &990940897
 GameObject:
   m_ObjectHideFlags: 0
@@ -6702,6 +6735,9 @@ GameObject:
   - component: {fileID: 1454174432}
   - component: {fileID: 1454174433}
   - component: {fileID: 1454174434}
+  - component: {fileID: 1454174435}
+  - component: {fileID: 1454174437}
+  - component: {fileID: 1454174436}
   m_Layer: 12
   m_Name: "Guada\xF1a"
   m_TagString: "Guada\xF1a"
@@ -6804,6 +6840,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posicionInicial: {fileID: 0}
   "delayGuada\xF1a": 8
+--- !u!114 &1454174435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454174430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a01aa53120a7b44a37a4f5f83d7c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eva: {fileID: 365847526}
+  timeBetweenAttacks: 0
+  scytheDamage: 0
+--- !u!61 &1454174436
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454174430}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.015625, y: 0.6898686}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.49056605, y: 0.5}
+    oldSize: {x: 1.65625, y: 2}
+    newSize: {x: 1.65625, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.65625, y: 0.62026274}
+  m_EdgeRadius: 0
+--- !u!50 &1454174437
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454174430}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1634019380
 GameObject:
   m_ObjectHideFlags: 0
