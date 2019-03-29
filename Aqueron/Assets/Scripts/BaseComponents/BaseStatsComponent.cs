@@ -10,12 +10,12 @@ public class BaseStatsComponent : MonoBehaviour {
 
 
     protected virtual void  Start() {
-        if (Health == 0 || Speed == 0 || Damage == 0) {
+        if (health*maxHealt*damage*maxDamage*speed*maxSpeed==0) {
             Debug.LogWarning("Warning: Stats con valor nulo en " + gameObject.name);
         }
     }
 
-    #region GettersSetters
+    #region Getters-Setters
     public virtual float Health {
         get { return this.health; }
         set { this.health = value; }
