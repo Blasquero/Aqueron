@@ -12,6 +12,8 @@ TagManager:
   - Enemy
   - LockedDoor
   - UnlockedDoor
+  - rampasTag
+  - rampaLayer
   layers:
   - Default
   - TransparentFX

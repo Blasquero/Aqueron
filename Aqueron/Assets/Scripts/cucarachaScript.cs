@@ -9,7 +9,8 @@ public class cucarachaScript : MonoBehaviour
     LayerMask ground;
     LayerMask puerta;
     private Rigidbody2D rb;
-    private bool isBlocked;
+    private bool isBlockedGround;
+    private bool isBlockedDoor;
     //velocidad negativa porque el sprite está mirando hacia la izquierda
     private float velocity = -1f;
     private bool facingRight;
@@ -40,9 +41,9 @@ public class cucarachaScript : MonoBehaviour
         //LineCast vertical detecta si el enemigo esta tocando el suelo
         bool isGrounded = Physics2D.Linecast(groundPos, groundPos + Vector2.down * 3, ground);
         //Linecast horizontal detecta si el enemigo tiene un obstaculo delante
-        isBlocked = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
+        isBlockedGround = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
         //Linecast horizontal detecta si el enemigo tiene una puerta delante
-        isBlocked = Physics2D.Linecast(groundPos, groundPos + vec2, puerta);
+        isBlockedDoor = Physics2D.Linecast(groundPos, groundPos + vec2, puerta);
 
         //Movimiento constanate del enemigo sin aceleración
         Vector2 myVel = rb.velocity;
@@ -51,7 +52,7 @@ public class cucarachaScript : MonoBehaviour
 
         //Flipeo del enemigo en funcion de la deteccion de los linecasts
         if (!isGrounded) Flip();
-        if (isBlocked) Flip();
+        if (isBlockedGround || isBlockedDoor) Flip();
     }
 
     //Metodo flipeo de sprite

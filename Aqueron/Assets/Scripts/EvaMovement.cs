@@ -78,14 +78,19 @@ public class EvaMovement : MonoBehaviour {
             
         if (move == 0 || !isGrounded || animator.GetBool("Jump") == true) FindObjectOfType<AudioManagerScript>().Stop("Steps");
         //Switcheo entre animacion de idle y run
-        if (move != 0) animator.SetFloat("Speed", 1f);
-        if (move == 0) animator.SetFloat("Speed", 0f);
+        if (move != 0)
+        {
+            animator.SetFloat("Speed", 1f);
+            circleCollider.sharedMaterial = normalMaterial;
+        }
 
-        if (move != 0 && isOnRampa) circleCollider.sharedMaterial = normalMaterial;
-        if (move == 0 && isOnRampa) circleCollider.sharedMaterial = superStickyMaterial;
+            if (move == 0)
+        {
+            animator.SetFloat("Speed", 0f);
+            circleCollider.sharedMaterial = superStickyMaterial;
+        }
 
         
-
         //Input salto
         //El isGrounded es para que cuando esta colgando de la pared, si pulsas 2 veces jump, cuando toque el suelo no vuelva a saltar
         if (Input.GetButtonDown("Jump") && isGrounded && !alreadyJumped)
@@ -109,8 +114,10 @@ public class EvaMovement : MonoBehaviour {
 
         //Activacion de salto de Eva cuando esta colgando en la pared y que solo pueda hacerlo una vez y solo cuando haya hecho 
         //el gancho antes(cuando el material cambie a sticky)
-        if (tocandoPared && Input.GetButtonDown("Jump") && !isGrounded && !alreadyJumpedAfterColgado
-            && circleCollider.sharedMaterial != normalMaterial)
+
+        /*if (tocandoPared && Input.GetButtonDown("Jump") && !isGrounded && !alreadyJumpedAfterColgado
+            && circleCollider.sharedMaterial != normalMaterial)*/
+          if(Input.GetButtonDown("Jump") && animator.GetBool("Colgando"))
         {
             FindObjectOfType<AudioManagerScript>().Play("Salto");
             jumpAfterColgado = true;
@@ -236,12 +243,11 @@ public class EvaMovement : MonoBehaviour {
     //Deteccion de isGrounded
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       if(collision.gameObject.layer == groundLayer || collision.gameObject.layer == rampaLayer)
+       if(collision.gameObject.layer == groundLayer)
         {
             isGrounded = true;
             //Esto es para cuando se usa el gancho para que eva deje de pegarse a las paredes si no usa el gancho despues de tocar el suelo
             if(collision.gameObject.layer == groundLayer) circleCollider.sharedMaterial = normalMaterial;
-            if (collision.gameObject.layer == rampaLayer) isOnRampa = true;
             animator.SetBool("Colgando", false);
             animator.SetBool("Jump", false);
             animator.SetBool("DobleSalto", false);
