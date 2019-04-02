@@ -45,9 +45,20 @@ public class EvaMovement : MonoBehaviour {
     private bool landed;
     private bool alreadyJumped;
     public bool tocandoPared;
-    
 
 
+    //Para que no se destruya eva entre escenas y si hay otra eva en las otras escenas(usadas para hacer testing en ellas,
+    //desaparezcan para que solo haya la eva que queremos controlar
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        GameObject.DontDestroyOnLoad(this.gameObject);
+    }
 
     void Start () {
         //Get Componentes
@@ -56,13 +67,10 @@ public class EvaMovement : MonoBehaviour {
         //Layer suelo
         groundLayer = LayerMask.NameToLayer("Ground");
         rampaLayer = LayerMask.NameToLayer("Rampas");
-        Instance = this;
         width = gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
         ground = 1 << LayerMask.NameToLayer("Ground");
         colgandoHand = GameObject.FindGameObjectWithTag("ColgandoHand");
         colgado = false;
-      //  guadaña.transform.position = guadañaPosicionInicial.transform.position;
-        
 	}
 
     // Update is called once per frame
@@ -115,9 +123,9 @@ public class EvaMovement : MonoBehaviour {
         //Activacion de salto de Eva cuando esta colgando en la pared y que solo pueda hacerlo una vez y solo cuando haya hecho 
         //el gancho antes(cuando el material cambie a sticky)
 
-        /*if (tocandoPared && Input.GetButtonDown("Jump") && !isGrounded && !alreadyJumpedAfterColgado
+     /*   if (tocandoPared && Input.GetButtonDown("Jump") && !isGrounded && !alreadyJumpedAfterColgado
             && circleCollider.sharedMaterial != normalMaterial)*/
-          if(Input.GetButtonDown("Jump") && animator.GetBool("Colgando"))
+         if(Input.GetButtonDown("Jump") && animator.GetBool("Colgando"))
         {
             FindObjectOfType<AudioManagerScript>().Play("Salto");
             jumpAfterColgado = true;

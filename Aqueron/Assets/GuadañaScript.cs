@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class GuadañaScript : MonoBehaviour
 {
-    public GameObject posicionInicial;
+    private GameObject posicionInicial;
     private Animator playerAnim;
     private bool facingRight;
     private GameObject colgandoHand;
     [SerializeField] private float delayGuadaña = 8f;
+    public static GuadañaScript Instance;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        GameObject.DontDestroyOnLoad(this.gameObject);
+    }
 
     void Start()
     {

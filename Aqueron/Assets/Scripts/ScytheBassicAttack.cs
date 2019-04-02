@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ScytheBassicAttack : MonoBehaviour {
 
-    [SerializeField]
     private SpriteRenderer render;
     [SerializeField]
     private GameObject scythe;
@@ -48,7 +47,6 @@ public class ScytheBassicAttack : MonoBehaviour {
                 show = true;
                 GameManagerScript.inputEnabled = false;
                 animatorEva.SetFloat("Speed", 0.0f);
-                Debug.Log("Ataque Iniciado");
                 Attack();
             }
         }

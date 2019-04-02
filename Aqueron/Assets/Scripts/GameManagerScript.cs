@@ -5,6 +5,7 @@ using Cinemachine;
 
 public class GameManagerScript : MonoBehaviour
 {
+    private GameObject player;
     private int playerLayer;
     private int boundariesLayer;
     private int groundLayer;
@@ -14,8 +15,21 @@ public class GameManagerScript : MonoBehaviour
     public static GameManagerScript Instance;
     public static bool inputEnabled = true;
 
+    //Para que nose destruya entre escenas y si en estas escenas hay otro como este, el de esa escena se destruye
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        GameObject.DontDestroyOnLoad(this.gameObject);
+    }
+
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         recolocarCamara = false;
         vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
         playerLayer = LayerMask.NameToLayer("Player");
@@ -27,6 +41,14 @@ public class GameManagerScript : MonoBehaviour
         Physics2D.IgnoreLayerCollision(groundLayer, boundariesLayer);
         Physics2D.IgnoreLayerCollision(enemyLayer, boundariesLayer);
         Instance = this;
+    }
+    private void Update()
+    {
+        if(vcam == null)
+        {
+            vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
+            vcam.m_Follow = player.transform;
+        }
     }
 
     private void FixedUpdate()
