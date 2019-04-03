@@ -12,11 +12,16 @@ public class EvaGanchoScript : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
 
+    public GameObject startPointChain;
+    LineRenderer chain;
+    GameObject GanchoClone;
     private void Start()
     {
         guadaña = GameObject.FindGameObjectWithTag("Guadaña");
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        chain = gameObject.GetComponent<LineRenderer>();
     }
 
     void Update()
@@ -37,6 +42,22 @@ public class EvaGanchoScript : MonoBehaviour
             }
             attackDone = true;
         }
+
+        
+        Vector3 chainStartPos = startPointChain.transform.position;
+        chain.SetPosition(0, chainStartPos);
+        Vector3 chainEndPos;
+        if (GanchoClone != null)
+        {
+            chainEndPos = GanchoClone.transform.position;
+            
+        }
+        else
+        {
+            chainEndPos = chainStartPos;
+
+        }
+        chain.SetPosition(1, chainEndPos);
     }
     
     //Metodo para usar en invoke para cooldown entre ganchos
@@ -49,7 +70,11 @@ public class EvaGanchoScript : MonoBehaviour
     {
         FindObjectOfType<AudioManagerScript>().Play("LanzarGancho");
         //Hace aparecer el gancho
-        Instantiate(gancho, ganchoTrans.position, ganchoTrans.rotation);
+        GanchoClone = Instantiate(gancho, ganchoTrans.position, ganchoTrans.rotation);
+        
+       
+        
+
         //Cooldown gancho
         Invoke("AttackDone", 1f);
 
