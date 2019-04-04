@@ -690,7 +690,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
-  m_Sprite: {fileID: 21300022, guid: 22453b8c32dd4ee409d4749a58258675, type: 3}
+  m_Sprite: {fileID: 21300020, guid: 22453b8c32dd4ee409d4749a58258675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -821,6 +821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gancho: {fileID: 692216455183138133, guid: 33c9c32751da4d4418171071c878b46e, type: 3}
   ganchoTrans: {fileID: 1992827269}
+  startPointChain: {fileID: 0}
 --- !u!1 &403279709
 GameObject:
   m_ObjectHideFlags: 0
@@ -87903,7 +87904,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.327038, y: 3.1467786, z: -10}
+  m_LocalPosition: {x: 29.315083, y: 3.1467786, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1827459275}
@@ -141615,6 +141616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 380d8b864672a5c4cac2bc3c9ab7a611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  posicionInicial: {fileID: 0}
 --- !u!61 &2100227482
 BoxCollider2D:
   m_ObjectHideFlags: 0

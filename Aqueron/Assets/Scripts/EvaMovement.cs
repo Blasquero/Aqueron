@@ -47,8 +47,7 @@ public class EvaMovement : MonoBehaviour {
     public bool tocandoPared;
 
 
-    //Para que no se destruya eva entre escenas y si hay otra eva en las otras escenas(usadas para hacer testing en ellas,
-    //desaparezcan para que solo haya la eva que queremos controlar
+    //Para que nose destruya entre escenas y si en estas escenas hay otro como este, el de esa escena se destruye
     private void Awake()
     {
         if (Instance != null)
