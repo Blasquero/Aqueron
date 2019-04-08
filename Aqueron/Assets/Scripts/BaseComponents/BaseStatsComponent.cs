@@ -3,58 +3,89 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseStatsComponent : MonoBehaviour {
-    
-    //Cualquier stat que un enemigo pueda necesitar debe estar declarada aquí
+
     [SerializeField]
-    private float maxHealt=0,health=0, maxDamage=0,damage=0,maxSpeed=0, speed=0;
+    protected float maxHealth=0,health=0, maxDamage=0,damage=0,maxSpeed=0, speed=0;
 
 
     protected virtual void  Start() {
-        if (health*maxHealt*damage*maxDamage*speed*maxSpeed==0) {
+        if (health*maxHealth*damage*maxDamage*speed*maxSpeed==0) {
             Debug.LogWarning("Warning: Stats con valor nulo en " + gameObject.name);
         }
     }
 
-    #region Getters-Setters
+    #region GettersSetters
     public virtual float Health {
-        get { return this.health; }
-        set { this.health = value; }
+        get { return health; }
+        set {
+            health = value;
+            if (health > maxHealth) {
+                health = maxHealth;
+            }
+            else if (health < 0) {
+                health = 0;
+            }
+        }
     }
 
     public virtual float Damage {
-        get { return this.damage; }
-        set { this.damage = value; }
+        get { return damage; }
+        set {
+            damage = value;
+            if (damage > maxDamage) {
+                damage = maxDamage;
+            }
+            else if (damage < 0) {
+                damage = 0;
+            }
+        }
     }
 
     public virtual float Speed {
-        get { return this.speed; }
-        set { this.speed = value; }
+        get { return speed; }
+        set {
+            speed = value;
+            if (speed > maxSpeed) {
+                speed = maxSpeed;
+            }
+            else if (speed < 0) {
+                speed = 0;
+            }
+        }
     }
     
     public virtual float ChangeHealth(float variation) {
-        this.health += variation;
-        if (this.health < 0) {
-            this.health = 0;
+        health += variation;
+        if (health < 0) {
+            health = 0;
         }
-        return this.health;
+        else if (health > maxHealth) {
+            health = maxHealth;
+        }
+        return health;
     }
 
     public virtual float ChangeSpeed(float variation) {
-        this.speed += variation;
-        if (this.speed < 0) {
-            this.speed = 0;
+        speed += variation;
+        if (speed < 0) {
+            speed = 0;
         }
-        return this.speed;
+        else if (speed > maxSpeed) {
+            speed = maxSpeed;
+        }
+        return speed;
     }
 
     public virtual float ChangeDamage(float variation) {
-        this.damage += variation;
-        if (this.damage <= 0) {
-            this.damage = 0;
+        damage += variation;
+        if (damage <= 0) {
+            damage = 0;
         }
-        return this.damage;
+        else if (damage > maxDamage) {
+            damage = maxDamage;
+        }
+        return damage;
     }
-
     #endregion
 
 }

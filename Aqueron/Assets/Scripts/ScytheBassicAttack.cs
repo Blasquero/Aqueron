@@ -4,47 +4,56 @@ using UnityEngine;
 
 public class ScytheBassicAttack : MonoBehaviour {
 
-    private SpriteRenderer render;
     [SerializeField]
-    private GameObject scythe;
+    private GameObject scythe, eva;
+    private SpriteRenderer render, renderScythe;
     private BoxCollider2D scytheHitbox;
     private Animator animatorEva, animator;
     private EvaMovement evaMovement;
-
-    private bool show = false;
-
-    [SerializeField]
-    private GameObject eva;
+    private BaseStatsComponent evaStats;
 
     [SerializeField]
     private float timeBetweenAttacks, scytheDamage;
-
     private bool attackEnabled;
-    [SerializeField]
-    private float attackDuration;
 
+    #region GettersSetters
     public bool AttackEnabled {
         get { return attackEnabled; }
         set { attackEnabled = value; }
     }
 
+    public float TimeBetweenAttacks {
+        get { return timeBetweenAttacks; }
+        set {
+            if (value > 0) {
+                timeBetweenAttacks = value;
+            }
+        }
+    }
+    #endregion
+
     void Start() {
         render = gameObject.GetComponent<SpriteRenderer>();
-        render.enabled = show;
         scytheHitbox = gameObject.GetComponent<BoxCollider2D>();
         animatorEva = eva.GetComponent<Animator>();
         animator = gameObject.GetComponent<Animator>();
         evaMovement = eva.GetComponent<EvaMovement>();
+        evaStats = eva.GetComponent<BaseStatsComponent>() as BaseStatsComponent;
+        if (evaStats == null) {
+            Debug.LogError("ERROR: No se ha detectado componente de Stats en Eva");
+            Debug.Break();
+        }
+        renderScythe = scythe.GetComponent<SpriteRenderer>();
         attackEnabled = true;
+        render.enabled = false;
+
     }
 
     void Update() {
-        render.enabled = show;
         gameObject.transform.position = eva.transform.position;
         if (Input.GetKeyDown(KeyCode.G) && attackEnabled) {
             if (evaMovement.isGrounded) {
                 attackEnabled = false;
-                show = true;
                 GameManagerScript.inputEnabled = false;
                 animatorEva.SetFloat("Speed", 0.0f);
                 Attack();
@@ -53,10 +62,9 @@ public class ScytheBassicAttack : MonoBehaviour {
     }
 
     private void Attack() {
-
         render.enabled = true;
         scytheHitbox.enabled = true;
-        scythe.GetComponent<SpriteRenderer>().enabled = false;
+        renderScythe.enabled = false;
         animator.SetBool("Attack", true);
         animatorEva.SetTrigger("Attack");
     }
@@ -66,7 +74,11 @@ public class ScytheBassicAttack : MonoBehaviour {
         if (collision.tag == "Enemy") {
             BaseDamageComponent baseDamage = collision.gameObject.GetComponent<BaseDamageComponent>() as BaseDamageComponent;
             if (baseDamage != null) {
-                baseDamage.Damage(scytheDamage);
+                baseDamage.Damage(evaStats.Damage);
+            }
+            else {
+                Debug.LogError("ERROR: Enemigo " + collision.gameObject.name + " sin componente de daño");
+                Debug.Break();
             }
         }
     }
@@ -80,9 +92,8 @@ public class ScytheBassicAttack : MonoBehaviour {
         GameManagerScript.inputEnabled = true;
         animatorEva.SetBool("Attack", false);
         Debug.Log("Ataque finalizado");
-        show = false;
-        scythe.GetComponent<SpriteRenderer>().enabled = true;
-
+        renderScythe.enabled = true;
+        render.enabled = false;
         scytheHitbox.enabled = false;
         Invoke("ActivateAttack", timeBetweenAttacks);
     }
