@@ -7,18 +7,23 @@ public class EvaMovement : MonoBehaviour {
     //Variables componentes
     private Rigidbody2D rb;
     private Animator animator;
-    public GameObject llamaSalto;
-    public Collider2D circleCollider;
-    public PhysicsMaterial2D normalMaterial;
-    public PhysicsMaterial2D stickyMaterial;
-    public PhysicsMaterial2D superStickyMaterial;
+    [SerializeField] private GameObject llamaSalto;
+    [SerializeField] private Collider2D circleCollider;
+    [SerializeField] private PhysicsMaterial2D normalMaterial;
+    [SerializeField] private PhysicsMaterial2D stickyMaterial;
+    [SerializeField] private PhysicsMaterial2D superStickyMaterial;
 
     private float move;
     private int groundLayer;
     private int rampaLayer;
     private float width;
 
-    [HideInInspector] public bool isGrounded;
+    #region encapsulación
+    //Encapsulación
+    private bool isGrounded;
+    private bool tocandoPared;
+    #endregion
+
     private bool jump;
     private bool facingRight;
     public static EvaMovement Instance;
@@ -31,10 +36,10 @@ public class EvaMovement : MonoBehaviour {
     [SerializeField] private float jumpForceColgandoHorizontal = 400f;
     private Vector3 velocity = Vector3.zero;
     LayerMask ground;
-    public float doubleJumpForce = 700f;
+    [SerializeField] private float doubleJumpForce = 700f;
 
     private GameObject colgandoHand;
-    public bool colgado;
+    private bool colgado;
     private bool jumpAfterColgado;
     private bool alreadyJumpedAfterColgado;
     private bool doubleJump;
@@ -44,7 +49,6 @@ public class EvaMovement : MonoBehaviour {
     private bool isOnRampa;
     private bool landed;
     private bool alreadyJumped;
-    public bool tocandoPared;
 
 
     //Para que nose destruya entre escenas y si en estas escenas hay otro como este, el de esa escena se destruye
@@ -80,7 +84,7 @@ public class EvaMovement : MonoBehaviour {
         tocandoPared = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
         Debug.DrawLine(groundPos, groundPos + vec2);
         //Input movimiento horizontal
-        if (GameManagerScript.inputEnabled) move = Input.GetAxisRaw("Horizontal");
+        if (GameManagerScript.Instance.InputEnabled) move = Input.GetAxisRaw("Horizontal");
         else move = 0;
             
         if (move == 0 || !isGrounded || animator.GetBool("Jump") == true) FindObjectOfType<AudioManagerScript>().Stop("Steps");
@@ -322,4 +326,15 @@ public class EvaMovement : MonoBehaviour {
         animator.SetBool("Landed", false);
     }
 
+    #region metodos encapsulados
+    public bool TocandoPared
+    {
+        get { return tocandoPared; }
+    }
+
+    public bool IsGrounded
+    {
+        get { return isGrounded; }
+    }
+    #endregion
 }

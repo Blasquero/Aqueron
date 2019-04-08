@@ -5,14 +5,14 @@ using Cinemachine;
 
 public class EvaGanchoScript : MonoBehaviour
 {
-    public GameObject gancho;
-    public Transform ganchoTrans;
+    [SerializeField] private GameObject gancho;
+    [SerializeField] private Transform ganchoTrans;
     private bool attackDone;
     private GameObject guadaña;
     private Animator animator;
     private Rigidbody2D rb;
 
-    public GameObject startPointChain;
+    [SerializeField] private GameObject startPointChain;
     LineRenderer chain;
     GameObject GanchoClone;
     private void Start()
@@ -34,9 +34,9 @@ public class EvaGanchoScript : MonoBehaviour
             animator.SetBool("Jump", false);
             Invoke("LanzarGancho", 0.20f);
             //Cuando lanzas el gancho, eva no puede moverse
-            if (!EvaMovement.Instance.isGrounded)
+            if (!EvaMovement.Instance.IsGrounded)
             {
-                GameManagerScript.inputEnabled = false;
+                GameManagerScript.Instance.InputEnabled = false;
                 rb.gravityScale = 0f;
                 rb.velocity = Vector3.zero;
             }

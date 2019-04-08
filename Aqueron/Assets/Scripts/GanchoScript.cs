@@ -62,14 +62,6 @@ public class GanchoScript : MonoBehaviour
             player.GetComponent<Animator>().SetBool("VolandoGancho", true);
             animator.SetTrigger("GanchoActivo");
         }
-
-        //Cuando eva lanza la guadaña, cae lentamente (le pongo el ganchoAereo para que solo le afecte una vez y no todo el rato lo cual haria un descenso raro)
-  /*      if (gameObject != null && !EvaMovement.Instance.isGrounded && ganchoAereo)
-        {
-            playerRb.gravityScale = 4;
-            playerRb.velocity = Vector3.zero;
-            ganchoAereo = false;
-        }*/
     }
 
     private void Update()
@@ -79,12 +71,12 @@ public class GanchoScript : MonoBehaviour
             transform.Translate(new Vector2(0f, moveSpeedGuadaña) * Time.deltaTime);
 
         //Cuando eva toca el suelo, puede volver afectarle la relentizacion de lanzar el gancho en el aire y recupera el control
-        if (EvaMovement.Instance.isGrounded)
+        if (EvaMovement.Instance.IsGrounded)
         {
             ganchoAereo = true;
             EvaMovement.Instance.enabled = true;
         }
-        if (EvaMovement.Instance.tocandoPared)
+        if (EvaMovement.Instance.TocandoPared)
         {
             player.GetComponent<Animator>().SetBool("VolandoGancho", false);
             Destroy(gameObject);
@@ -96,7 +88,7 @@ public class GanchoScript : MonoBehaviour
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
             guadaña.transform.position = GameObject.FindGameObjectWithTag("ColgandoHand").transform.position;
-            GameManagerScript.inputEnabled = true;
+            GameManagerScript.Instance.InputEnabled = true;
         }
     }
 
@@ -114,7 +106,7 @@ public class GanchoScript : MonoBehaviour
             player.GetComponent<Animator>().SetBool("Gancho", false);
             Physics2D.IgnoreLayerCollision(12, 9, false);
             vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 8f;
-            GameManagerScript.Instance.recolocarCamara = true;
+            GameManagerScript.Instance.RecolocarCamara = true;
 
         }
         //En vez de que a cierta distancia del player desaparezca, que cuando el colider choca con el de la guadaña, desaparezca
@@ -130,7 +122,7 @@ public class GanchoScript : MonoBehaviour
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
             guadaña.transform.position = GameObject.FindGameObjectWithTag("ColgandoHand").transform.position;
-            GameManagerScript.inputEnabled = true;
+            GameManagerScript.Instance.InputEnabled = true;
         }
     }
 
@@ -143,7 +135,7 @@ public class GanchoScript : MonoBehaviour
             player.GetComponent<Rigidbody2D>().gravityScale = 7;
             SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
-            GameManagerScript.inputEnabled = true;
+            GameManagerScript.Instance.InputEnabled = true;
             player.GetComponent<Animator>().SetBool("Gancho", false);
         }
     }
@@ -160,7 +152,7 @@ public class GanchoScript : MonoBehaviour
         player.GetComponent<Rigidbody2D>().gravityScale = 7;
         SpriteRenderer guadañaRenderer = guadaña.GetComponent<SpriteRenderer>();
         guadañaRenderer.enabled = true;
-        GameManagerScript.inputEnabled = true;
+        GameManagerScript.Instance.InputEnabled = true;
         player.GetComponent<Animator>().SetBool("Gancho", false);
     }
 }

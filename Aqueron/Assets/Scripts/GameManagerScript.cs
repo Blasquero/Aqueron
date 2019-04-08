@@ -11,9 +11,10 @@ public class GameManagerScript : MonoBehaviour
     private int groundLayer;
     private int enemyLayer;
     private CinemachineVirtualCamera vcam;
-    public bool recolocarCamara;
+
     public static GameManagerScript Instance;
-    public static bool inputEnabled = true;
+    private bool recolocarCamara;
+    private bool inputEnabled;
 
     //Para que nose destruya entre escenas y si en estas escenas hay otro como este, el de esa escena se destruye
     private void Awake()
@@ -29,6 +30,7 @@ public class GameManagerScript : MonoBehaviour
 
     void Start()
     {
+        inputEnabled = true;
         player = GameObject.FindGameObjectWithTag("Player");
         recolocarCamara = false;
         vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
@@ -59,4 +61,18 @@ public class GameManagerScript : MonoBehaviour
             if (vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping == 0) recolocarCamara = false;
         }
     }
+
+    #region Getters-Setters
+    public bool RecolocarCamara
+    {
+        get { return recolocarCamara; }
+        set { this.recolocarCamara = value; }
+    }
+
+    public bool InputEnabled
+    {
+        get { return inputEnabled; }
+        set { this.inputEnabled = value; }
+    }
+    #endregion
 }

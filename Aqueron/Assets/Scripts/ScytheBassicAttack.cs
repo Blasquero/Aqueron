@@ -42,10 +42,10 @@ public class ScytheBassicAttack : MonoBehaviour {
         render.enabled = show;
         gameObject.transform.position = eva.transform.position;
         if (Input.GetKeyDown(KeyCode.G) && attackEnabled) {
-            if (evaMovement.isGrounded) {
+            if (evaMovement.IsGrounded) {
                 attackEnabled = false;
                 show = true;
-                GameManagerScript.inputEnabled = false;
+                GameManagerScript.Instance.InputEnabled = false;
                 animatorEva.SetFloat("Speed", 0.0f);
                 Attack();
             }
@@ -77,7 +77,7 @@ public class ScytheBassicAttack : MonoBehaviour {
 
     void EndAttack() {
         animator.SetBool("Attack", false);
-        GameManagerScript.inputEnabled = true;
+        GameManagerScript.Instance.InputEnabled = true;
         animatorEva.SetBool("Attack", false);
         Debug.Log("Ataque finalizado");
         show = false;
