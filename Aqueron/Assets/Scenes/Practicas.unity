@@ -812,17 +812,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbb2103005b8a740a5d191f72c2f75e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  llamaSalto: {fileID: 383353635380443116}
+  jetpack: {fileID: 383353635380443116}
   circleCollider: {fileID: 365847532}
   normalMaterial: {fileID: 6200000, guid: d95375c155435ac488e111015a3aa992, type: 2}
   stickyMaterial: {fileID: 6200000, guid: e9d20437f6a005640899fe1ade6b3e43, type: 2}
   superStickyMaterial: {fileID: 6200000, guid: 8e795ebcb5a738b4a8969a6b3a761893, type: 2}
-  desliceVelocidad: 0.015
   jumpForce: 1200
-  velocidad: 7
-  m_MovementSmoothing: 0.05
-  jumpForceColgandoHorizontal: 400
+  jumpForceHorizontalHanging: 400
   doubleJumpForce: 700
+  velocity: 4
+  movementSmoothing: 0.05
+  wallSlipperingVel: 0.015
 --- !u!58 &365847532
 CircleCollider2D:
   m_ObjectHideFlags: 0

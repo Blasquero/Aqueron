@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class GuadañaScript : MonoBehaviour
 {
-    private GameObject posicionInicial;
+    private GameObject scytheInitialPosition;
     private Animator playerAnim;
     private bool facingRight;
-    private GameObject colgandoHand;
-    [SerializeField] private float delayGuadaña = 8f;
+    private GameObject hangingHand;
+    [SerializeField] private float scytheDelay;
     public static GuadañaScript Instance;
-    // Start is called before the first frame update
+    private float distance;
+    private GameObject player;
 
-    private void Awake()
-    {
-        if (Instance != null)
-        {
+    private void Awake() {
+        if (Instance != null) {
             Destroy(this.gameObject);
             return;
         }
@@ -23,39 +22,47 @@ public class GuadañaScript : MonoBehaviour
         GameObject.DontDestroyOnLoad(this.gameObject);
     }
 
-    void Start()
-    {
+    void Start() {
         
-        posicionInicial = GameObject.FindGameObjectWithTag("GuadañaPosicionInicial");
+        scytheInitialPosition = GameObject.FindGameObjectWithTag("GuadañaPosicionInicial");
         playerAnim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-        colgandoHand = GameObject.FindGameObjectWithTag("ColgandoHand");
+        hangingHand = GameObject.FindGameObjectWithTag("ColgandoHand");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
+    private void Update() {
+        //Si la guadaña se aleja demasiado de eva, esta aumenta su velocidad hasta que este cerca
+        distance = Vector2.Distance(gameObject.transform.position, player.transform.position);
 
-    private void Update()
-    {
-        if (playerAnim.GetBool("Colgando") == false)
-        {
-            if (posicionInicial.transform.eulerAngles.y < 179 && facingRight) Flip();
-            else if (posicionInicial.transform.eulerAngles.y > 179 && !facingRight) Flip();
+        if(distance > 3) {
+            scytheDelay = 30f;
+        } else {
+            scytheDelay = 8f;
+        }
+
+        if (playerAnim.GetBool("Colgando") == false) {
+            if (scytheInitialPosition.transform.eulerAngles.y < 179 && facingRight)
+            {
+                Flip();
+            }
+            else if (scytheInitialPosition.transform.eulerAngles.y > 179 && !facingRight)
+            {
+                Flip();
+            }
             GetComponent<Animator>().enabled = true;
-        } else if (playerAnim.GetBool("Colgando") == true)
-        {
-            transform.position = colgandoHand.transform.position;
+        } else if (playerAnim.GetBool("Colgando") == true) {
+            transform.position = hangingHand.transform.position;
             GetComponent<Animator>().enabled = false;
         }
     }
-    void FixedUpdate()
-    {
-        if (playerAnim.GetBool("Colgando") == false)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, posicionInicial.transform.position, delayGuadaña * Time.fixedDeltaTime);
+
+    void FixedUpdate() {
+        if (playerAnim.GetBool("Colgando") == false) {
+            transform.position = Vector2.MoveTowards(transform.position, scytheInitialPosition.transform.position, scytheDelay * Time.fixedDeltaTime);
         }
     }
 
-    void Flip()
-    {
+    void Flip() {
         transform.Rotate(0f, 180f, 0f);
         facingRight = !facingRight;
     }
