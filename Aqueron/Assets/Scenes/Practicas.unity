@@ -641,7 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 237746739}
   m_Layer: 9
-  m_Name: ColgandoHand
+  m_Name: HangingHand
   m_TagString: ColgandoHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -820,7 +820,7 @@ MonoBehaviour:
   jumpForce: 1200
   jumpForceHorizontalHanging: 400
   doubleJumpForce: 700
-  velocity: 4
+  velocity: 7
   movementSmoothing: 0.05
   wallSlipperingVel: 0.015
 --- !u!58 &365847532
@@ -896,8 +896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c5518e86801484f9a0f75af5149435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gancho: {fileID: 692216455183138133, guid: 33c9c32751da4d4418171071c878b46e, type: 3}
-  ganchoTrans: {fileID: 1992827269}
+  hook: {fileID: 692216455183138133, guid: 33c9c32751da4d4418171071c878b46e, type: 3}
+  hookTrans: {fileID: 1992827269}
   startPointChain: {fileID: 0}
 --- !u!1 &403279709
 GameObject:
@@ -87998,7 +87998,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522065612}
   m_Layer: 9
-  m_Name: "Guada\xF1aPosicionInicial"
+  m_Name: ScytheInitialPosition
   m_TagString: "Guada\xF1aPosicionInicial"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134488,7 +134488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db21784b3adba94da4b8bb31ece94e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "delayGuada\xF1a": 8
+  scytheDelay: 0
 --- !u!61 &1454174436
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143735,7 +143735,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1992827269}
   m_Layer: 9
-  m_Name: GanchoPoint
+  m_Name: HookTrans
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143919,7 +143919,7 @@ GameObject:
   - component: {fileID: 4031251272777030496}
   - component: {fileID: 383353635380443117}
   m_Layer: 0
-  m_Name: LlamaSalto
+  m_Name: Jetpack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143948,7 +143948,7 @@ PrefabInstance:
     - target: {fileID: 383353635380443116, guid: 747f9f48a7e3ac74f9c1fe6247f6b030,
         type: 3}
       propertyPath: m_Name
-      value: LlamaSalto
+      value: Jetpack
       objectReference: {fileID: 0}
     - target: {fileID: 383353635380443116, guid: 747f9f48a7e3ac74f9c1fe6247f6b030,
         type: 3}
