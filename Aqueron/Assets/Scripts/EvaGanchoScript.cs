@@ -44,13 +44,21 @@ public class EvaGanchoScript : MonoBehaviour
             attackDone = true;
         }
 
-        
+        if (!EvaMovement.Instance.IsGrounded)
+        {
+            startPointChain.transform.localPosition = new Vector3(0.29f,0.62f,0);
+        }
+        else
+        {
+            startPointChain.transform.localPosition = new Vector3(0.305f, 0.041f, 0);
+        }
         Vector3 chainStartPos = startPointChain.transform.position;
         chain.SetPosition(0, chainStartPos);
         Vector3 chainEndPos;
-        if (scytheClone != null)
+        
+            if (scytheClone != null)
         {
-            chainEndPos = scytheClone.transform.position;
+            chainEndPos = GameObject.Find("grip").transform.position;
             
         }
         else
