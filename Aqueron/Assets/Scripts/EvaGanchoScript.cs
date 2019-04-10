@@ -23,9 +23,11 @@ public class EvaGanchoScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         chain = gameObject.GetComponent<LineRenderer>();
         audioManager = FindObjectOfType<AudioManagerScript>();
-    }
 
+    }
+    
     void Update() {
+        
         if (animator.GetBool("Falling") == true) {
             audioManager.Stop("Steps");
         }
