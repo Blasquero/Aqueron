@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EvaMovement : MonoBehaviour {
 
@@ -72,13 +73,14 @@ public class EvaMovement : MonoBehaviour {
         ground = 1 << LayerMask.NameToLayer("Ground");
         hangingHand = GameObject.FindGameObjectWithTag("ColgandoHand");
         hanging = false;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        AudioManager = FindObjectOfType<AudioManagerScript>();
+    }
+
     void Update() {
-        if (AudioManager == null)
-        {
-            AudioManager = FindObjectOfType<AudioManagerScript>();
-        }
         //Detector de si hay una pared delante de eva 
         Vector2 groundPos = transform.position + transform.right * width;
         Vector2 vec2 = transform.right * -.02f;

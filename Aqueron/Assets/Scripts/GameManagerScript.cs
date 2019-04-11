@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -39,13 +40,12 @@ public class GameManagerScript : MonoBehaviour
         Physics2D.IgnoreLayerCollision(groundLayer, boundariesLayer);
         Physics2D.IgnoreLayerCollision(enemyLayer, boundariesLayer);
         Instance = this;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void Update(){
-        if(vcam == null) {
-            vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
-            vcam.m_Follow = player.transform;
-        }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
+        vcam.m_Follow = player.transform;
     }
 
     private void FixedUpdate() {

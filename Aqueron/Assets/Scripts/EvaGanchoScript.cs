@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class EvaGanchoScript : MonoBehaviour
 {
@@ -23,11 +24,14 @@ public class EvaGanchoScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         chain = gameObject.GetComponent<LineRenderer>();
         audioManager = FindObjectOfType<AudioManagerScript>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        audioManager = FindObjectOfType<AudioManagerScript>();
     }
     
     void Update() {
-        
         if (animator.GetBool("Falling") == true) {
             audioManager.Stop("Steps");
         }
