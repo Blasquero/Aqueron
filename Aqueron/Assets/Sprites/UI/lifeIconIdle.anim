@@ -36,6 +36,7 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: 379dacc15df681a4f839023bf5a5bd52, type: 3}
+<<<<<<< Updated upstream
     - time: 0.06666667
       value: {fileID: 21300002, guid: 379dacc15df681a4f839023bf5a5bd52, type: 3}
     - time: 0.13333334
@@ -55,6 +56,13 @@ AnimationClip:
     classID: 114
     script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_SampleRate: 15
+=======
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+  m_SampleRate: 7
+>>>>>>> Stashed changes
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -69,17 +77,26 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 1
     - serializedVersion: 2
+<<<<<<< Updated upstream
       path: 3547548615
       attribute: 2015549526
       script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
       typeID: 114
       customType: 0
+=======
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+>>>>>>> Stashed changes
       isPPtrCurve: 1
     pptrCurveMapping:
     - {fileID: 21300000, guid: 0f2317a4d6998e34eaa45ac1ac747b3b, type: 3}
     - {fileID: 21300002, guid: 0f2317a4d6998e34eaa45ac1ac747b3b, type: 3}
     - {fileID: 21300032, guid: 0f2317a4d6998e34eaa45ac1ac747b3b, type: 3}
     - {fileID: 21300034, guid: 0f2317a4d6998e34eaa45ac1ac747b3b, type: 3}
+<<<<<<< Updated upstream
     - {fileID: 21300000, guid: 0f2317a4d6998e34eaa45ac1ac747b3b, type: 3}
     - {fileID: 21300000, guid: 379dacc15df681a4f839023bf5a5bd52, type: 3}
     - {fileID: 21300002, guid: 379dacc15df681a4f839023bf5a5bd52, type: 3}
@@ -89,6 +106,9 @@ AnimationClip:
     - {fileID: 21300002, guid: 379dacc15df681a4f839023bf5a5bd52, type: 3}
     - {fileID: 21300004, guid: 379dacc15df681a4f839023bf5a5bd52, type: 3}
     - {fileID: 21300006, guid: 379dacc15df681a4f839023bf5a5bd52, type: 3}
+=======
+    - {fileID: 21300000, guid: 379dacc15df681a4f839023bf5a5bd52, type: 3}
+>>>>>>> Stashed changes
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
