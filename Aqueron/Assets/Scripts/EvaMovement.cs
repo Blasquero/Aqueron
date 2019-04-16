@@ -69,7 +69,7 @@ public class EvaMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
         groundLayer = LayerMask.NameToLayer("Ground");
         rampLayer = LayerMask.NameToLayer("Rampas");
-        width = gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;
+        width = gameObject.GetComponent<SpriteRenderer>().bounds.extents.x;   
         ground = 1 << LayerMask.NameToLayer("Ground");
         hangingHand = GameObject.FindGameObjectWithTag("ColgandoHand");
         hanging = false;
@@ -83,7 +83,7 @@ public class EvaMovement : MonoBehaviour {
     void Update() {
         //Detector de si hay una pared delante de eva 
         Vector2 groundPos = transform.position + transform.right * width;
-        Vector2 vec2 = transform.right * -.02f;
+        Vector2 vec2 = transform.right * -.02f; ;
         touchingWall = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
         Debug.DrawLine(groundPos, groundPos + vec2);
 
@@ -118,7 +118,7 @@ public class EvaMovement : MonoBehaviour {
             alreadyJumped = true;
         }
         //Double salto
-        if (Input.GetButtonDown("Jump") && !isGrounded && !touchingWall && !alreadyDoubleJumped) {
+        if (Input.GetButtonDown("Jump") && !isGrounded  && !alreadyDoubleJumped && !animator.GetBool("Colgando")) {
             animator.SetBool("DobleSalto", true);
             doubleJump = true;
             alreadyDoubleJumped = true;
