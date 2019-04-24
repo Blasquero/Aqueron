@@ -22,7 +22,9 @@ public class GanchoScript : MonoBehaviour
     private CinemachineVirtualCamera vcam;
     private Animator playerAnimator;
     private AudioManagerScript audioManager;
-    
+    [SerializeField] private GameObject impactParticle;
+    [SerializeField] private GameObject impactPoint;
+
 
     private GameObject scythe;
 
@@ -101,8 +103,9 @@ public class GanchoScript : MonoBehaviour
             Physics2D.IgnoreLayerCollision(12, 9, false);
             vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 8f;
             GameManagerScript.Instance.RecolocarCamara = true;
-
+            Instantiate(impactParticle, impactPoint.transform.position, impactPoint.transform.rotation);
         }
+
         //En vez de que a cierta distancia del player desaparezca, que cuando el colider choca con el de la guadaña, desaparezca
            if(collision.gameObject == player) {
             playerAnimator.SetBool("VolandoGancho", false);
