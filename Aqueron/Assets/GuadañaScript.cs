@@ -12,6 +12,8 @@ public class GuadañaScript : MonoBehaviour
     public static GuadañaScript Instance;
     private float distance;
     private GameObject player;
+    public ParticleSystem hangingParticles;
+    private bool activatedHangingParticles;
 
     private void Awake() {
         if (Instance != null) {
@@ -28,6 +30,7 @@ public class GuadañaScript : MonoBehaviour
         playerAnim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         hangingHand = GameObject.FindGameObjectWithTag("ColgandoHand");
         player = GameObject.FindGameObjectWithTag("Player");
+        activatedHangingParticles = true;
     }
 
     private void Update() {
@@ -50,7 +53,15 @@ public class GuadañaScript : MonoBehaviour
                 Flip();
             }
             GetComponent<Animator>().enabled = true;
+            if(activatedHangingParticles) {
+                hangingParticles.Stop();
+                activatedHangingParticles = false;
+            }
         } else if (playerAnim.GetBool("Colgando") == true) {
+            if (!activatedHangingParticles) {
+                hangingParticles.Play();
+                activatedHangingParticles = true;
+            }
             transform.position = hangingHand.transform.position;
             GetComponent<Animator>().enabled = false;
         }

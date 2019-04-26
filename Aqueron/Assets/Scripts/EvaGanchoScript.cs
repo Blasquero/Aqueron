@@ -17,6 +17,8 @@ public class EvaGanchoScript : MonoBehaviour
     private Rigidbody2D rb;
     private LineRenderer chain;
     private AudioManagerScript audioManager;
+    [SerializeField] private GameObject scytheLight;
+    public static EvaGanchoScript Instance;
 
     private void Start() {
         scythe = GameObject.FindGameObjectWithTag("Guadaña");
@@ -25,6 +27,7 @@ public class EvaGanchoScript : MonoBehaviour
         chain = gameObject.GetComponent<LineRenderer>();
         audioManager = FindObjectOfType<AudioManagerScript>();
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Instance = this;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
@@ -84,10 +87,15 @@ public class EvaGanchoScript : MonoBehaviour
         //Guadaña detras de eva desaparece mientras se mueve en forma d egancho
         SpriteRenderer guadañaRenderer = scythe.GetComponent<SpriteRenderer>();
         guadañaRenderer.enabled = false;
+        scytheLight.SetActive(false);
     }
 
     //Metodo para usar en invoke para cooldown entre ganchos
     void AttackDone() {
         attackDone = false;
+    }
+
+    public GameObject ScytheLight {
+        get { return scytheLight; }
     }
 }

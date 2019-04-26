@@ -334,4 +334,5 @@ public class EvaMovement : MonoBehaviour {
         get { return isGrounded; }
     }
     #endregion
+
 }

@@ -85,6 +85,7 @@ public class GanchoScript : MonoBehaviour
             hanging = true;
             SpriteRenderer guadañaRenderer = scythe.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
+            EvaGanchoScript.Instance.ScytheLight.SetActive(true);
             scythe.transform.position = GameObject.FindGameObjectWithTag("ColgandoHand").transform.position;
             GameManagerScript.Instance.InputEnabled = true;
         }
@@ -107,6 +108,7 @@ public class GanchoScript : MonoBehaviour
         }
 
         //En vez de que a cierta distancia del player desaparezca, que cuando el colider choca con el de la guadaña, desaparezca
+        //Esto es para cuando eva llega al destino PERO no toca la pared, como por ejemplo a un techo
            if(collision.gameObject == player) {
             playerAnimator.SetBool("VolandoGancho", false);
             Destroy(gameObject);
@@ -117,6 +119,7 @@ public class GanchoScript : MonoBehaviour
             hanging = true;
             SpriteRenderer guadañaRenderer = scythe.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
+            EvaGanchoScript.Instance.ScytheLight.SetActive(true);
             scythe.transform.position = GameObject.FindGameObjectWithTag("ColgandoHand").transform.position;
             GameManagerScript.Instance.InputEnabled = true;
         }
@@ -128,6 +131,7 @@ public class GanchoScript : MonoBehaviour
             playerRb.gravityScale = 7;
             SpriteRenderer guadañaRenderer = scythe.GetComponent<SpriteRenderer>();
             guadañaRenderer.enabled = true;
+            EvaGanchoScript.Instance.ScytheLight.SetActive(true);
             GameManagerScript.Instance.InputEnabled = true;
             playerAnimator.SetBool("Gancho", false);
         }
@@ -144,6 +148,7 @@ public class GanchoScript : MonoBehaviour
         playerRb.gravityScale = 7;
         SpriteRenderer guadañaRenderer = scythe.GetComponent<SpriteRenderer>();
         guadañaRenderer.enabled = true;
+        EvaGanchoScript.Instance.ScytheLight.SetActive(true);
         GameManagerScript.Instance.InputEnabled = true;
         playerAnimator.SetBool("Gancho", false);
     }
