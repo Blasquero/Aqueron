@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class GanchoScript : MonoBehaviour
-{
+public class GanchoScript : MonoBehaviour {
     private Rigidbody2D playerRb;
     private GameObject player;
     private bool activeScythe;
     private bool shouldMove;
     private bool hit;
     private bool aerialHook = true;
+    private bool activeScytheEnemy;
+    private GameObject enemy;
 
     private int playerLayer;
     private int boundariesLayer;
     private int groundLayer;
+    private int enemyLayer;
     private int rampLayer;
     private int scytheLayer;
     private bool hanging;
@@ -39,6 +41,7 @@ public class GanchoScript : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
         boundariesLayer = LayerMask.NameToLayer("Boudaries");
         groundLayer = LayerMask.NameToLayer("Ground");
+        enemyLayer = LayerMask.NameToLayer("Enemy");
         scytheLayer = LayerMask.NameToLayer("Guadaña");
         //Si no choca contra nada la guadaña, desaparece tras 0.5 segundos
         Invoke("AutoDestruccion", 0.35f);
@@ -59,7 +62,10 @@ public class GanchoScript : MonoBehaviour
             playerRb.gravityScale = 0;
             playerRb.velocity = Vector3.zero;
             playerAnimator.SetBool("VolandoGancho", true);
-            animator.SetTrigger("GanchoActivo");
+        }
+        if (activeScytheEnemy) {
+            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, player.transform.position, evaVel * Time.fixedDeltaTime);
+            transform.position = enemy.transform.position;
         }
     }
 
@@ -89,6 +95,13 @@ public class GanchoScript : MonoBehaviour
             scythe.transform.position = GameObject.FindGameObjectWithTag("ColgandoHand").transform.position;
             GameManagerScript.Instance.InputEnabled = true;
         }
+
+        if (AvispaScript.instance.ReachedPlayer) {
+            Destroy(gameObject);
+            SpriteRenderer guadañaRenderer = scythe.GetComponent<SpriteRenderer>();
+            guadañaRenderer.enabled = true;
+            EvaGanchoScript.Instance.ScytheLight.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -109,7 +122,7 @@ public class GanchoScript : MonoBehaviour
 
         //En vez de que a cierta distancia del player desaparezca, que cuando el colider choca con el de la guadaña, desaparezca
         //Esto es para cuando eva llega al destino PERO no toca la pared, como por ejemplo a un techo
-           if(collision.gameObject == player) {
+        if (collision.gameObject == player) {
             playerAnimator.SetBool("VolandoGancho", false);
             Destroy(gameObject);
             //Cuando eva llega, la gravedad se pone a esto y luego en EvaMovement, va aumentando hasta que toca suelo y vuelve a 7
@@ -122,7 +135,24 @@ public class GanchoScript : MonoBehaviour
             EvaGanchoScript.Instance.ScytheLight.SetActive(true);
             scythe.transform.position = GameObject.FindGameObjectWithTag("ColgandoHand").transform.position;
             GameManagerScript.Instance.InputEnabled = true;
+
         }
+        if(collision.gameObject.layer == enemyLayer) {
+            enemy = collision.gameObject;
+            AvispaScript.instance.Movement = false;
+            enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            audioManager.Play("ImpactoGancho");
+            Invoke("StopMovingDelay", .03f);
+            hit = true;
+            activeScytheEnemy = true;
+            if(gameObject.transform.eulerAngles.y < 179 && !AvispaScript.instance.FacingRight) {
+                enemy.transform.Rotate(0f, 180f, 0f);
+                AvispaScript.instance.FacingRight = !AvispaScript.instance.FacingRight;
+            } else if(gameObject.transform.eulerAngles.y > 179 && AvispaScript.instance.FacingRight) {
+                enemy.transform.Rotate(0f, 180f, 0f);
+                AvispaScript.instance.FacingRight = !AvispaScript.instance.FacingRight;
+            }
+        }       
     }
 
     void AutoDestruccion() {

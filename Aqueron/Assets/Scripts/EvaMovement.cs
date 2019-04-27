@@ -83,7 +83,7 @@ public class EvaMovement : MonoBehaviour {
     void Update() {
         //Detector de si hay una pared delante de eva 
         Vector2 groundPos = transform.position + transform.right * width;
-        Vector2 vec2 = transform.right * -.02f; ;
+        Vector2 vec2 = transform.right * -.02f; 
         touchingWall = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
         Debug.DrawLine(groundPos, groundPos + vec2);
 

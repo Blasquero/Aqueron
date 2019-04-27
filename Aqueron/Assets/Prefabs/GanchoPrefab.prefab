@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 692216455183138135}
   - component: {fileID: 692216455183138134}
   - component: {fileID: 985026045}
-  - component: {fileID: 8264686275985710016}
   m_Layer: 12
   m_Name: GanchoPrefab
   m_TagString: Untagged
@@ -128,25 +127,6 @@ MonoBehaviour:
   impactPoint: {fileID: 5396548493230010118}
   scytheVel: 20
   evaVel: 15
---- !u!95 &8264686275985710016
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 692216455183138133}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c04d3d092a38a41469236807f926d619, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1597316677265966099
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5396548493230010118}
   m_LocalRotation: {x: -0.20467822, y: -0.66282904, z: 0.61235315, w: 0.37919408}
-  m_LocalPosition: {x: -0.344, y: 0.207, z: 0}
+  m_LocalPosition: {x: -0.435, y: 0.207, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 692216455183138128}

@@ -7,11 +7,17 @@ public class AvispaScript : MonoBehaviour
     private float width;
     LayerMask ground;
     LayerMask puerta;
+    private int playerLayer;
     private Rigidbody2D rb;
-    private bool isBlocked;
+    private bool isBlockedGround;
+    private bool isBlockedPuerta;
+    private bool isGrounded;
+    private bool movement;
+    private bool reachedPlayer;
     //velocidad negativa porque el sprite está mirando hacia la izquierda
     private float velocity = -1f;
-    public bool facingRight;
+    private bool facingRight;
+    public static AvispaScript instance;
     void Start()
     {
         //Get Componentes
@@ -20,12 +26,16 @@ public class AvispaScript : MonoBehaviour
         //Get Layer ground
         ground = 1 << LayerMask.NameToLayer("Ground");
         puerta = 1 << LayerMask.NameToLayer("Puerta");
+        instance = this;
+        movement = true;
+        reachedPlayer = false;
+        playerLayer = LayerMask.NameToLayer("Player");
     }
 
     void FixedUpdate()
     {
         //Linea de longitud .02f vertical
-        Vector2 vec2 = Tovector2(transform.right) * -.02f;
+        Vector2 vec2 = transform.right * -.1f;
         //Posicion al extremo horizontal del sprite
         Vector2 groundPos = transform.position + transform.right * -width;
         //Visualizacion de la linea vertical
@@ -33,32 +43,65 @@ public class AvispaScript : MonoBehaviour
         //Visualizacion de la linea horizontal
         Debug.DrawLine(groundPos, groundPos + vec2);
         //LineCast vertical detecta si el enemigo esta tocando el suelo
-        bool isGrounded = Physics2D.Linecast(groundPos, groundPos + Vector2.down * 3, ground);
+        isGrounded = Physics2D.Linecast(groundPos, groundPos + Vector2.down * 3, ground);
         //Linecast horizontal detecta si el enemigo tiene un obstaculo delante
-        isBlocked = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
+        isBlockedGround = Physics2D.Linecast(groundPos, groundPos + vec2, ground);
         //Linecast horizontal detecta si el enemigo tiene una puerta delante
-        isBlocked = Physics2D.Linecast(groundPos, groundPos + vec2, puerta);
+        isBlockedPuerta = Physics2D.Linecast(groundPos, groundPos + vec2, puerta);
 
         //Movimiento constanate del enemigo sin aceleración
-        Vector2 myVel = rb.velocity;
-        myVel.x = transform.right.x * velocity;
-        rb.velocity = myVel;
+        if (movement) {
+            Vector2 myVel = rb.velocity;
+            myVel.x = transform.right.x * velocity;
+            rb.velocity = myVel;
+        }
 
         //Flipeo del enemigo en funcion de la deteccion de los linecasts
-        if(!isGrounded) Flip();
-        if (isBlocked) Flip();
+        if (!isGrounded) {
+            Flip();
+        }
+        if (isBlockedGround || isBlockedPuerta) {
+            Flip();
+        }
     }
 
     //Metodo flipeo de sprite
-    void Flip()
-    {
+    void Flip() {
         transform.Rotate(0f, 180f, 0f);
         facingRight = !facingRight;
     }
 
-    //Metodo para transformar vector3 a vector2, util para el linecast horizontal del isBlocked
-    private Vector3 Tovector2(Vector3 vec3)
-    {
-        return new Vector2(vec3.x, vec3.y);
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.layer == playerLayer) {
+            Invoke("MovementBack", 1f);
+            reachedPlayer = true;
+        }
     }
+
+    private void OnCollisionExit2D(Collision2D collision) {
+        if (collision.gameObject.layer == playerLayer) {
+            reachedPlayer = false;
+        }
+    }
+
+    #region get-set
+    void MovementBack() {
+        movement = true;
+    }
+
+    public bool Movement {
+        get { return movement; }
+        set { this.movement = value; }
+    }
+
+    public bool ReachedPlayer {
+        get { return reachedPlayer;  }
+        set { this.reachedPlayer = value; }
+    }
+
+    public bool FacingRight {
+        get { return facingRight; }
+        set { this.facingRight = value; }
+    }
+    #endregion
 }

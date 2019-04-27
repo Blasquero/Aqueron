@@ -7,7 +7,11 @@ using UnityEngine.SceneManagement;
 public class EvaGanchoScript : MonoBehaviour
 {
     [SerializeField] private GameObject hook;
-    [SerializeField] private Transform hookTrans;
+    [SerializeField] private Transform diagonalUpHook;
+    [SerializeField] private Transform diagonalDownHook;
+    [SerializeField] private Transform horizontalHook;
+    [SerializeField] private Transform verticalUpHook;
+    [SerializeField] private Transform verticalDownHook;
     [SerializeField] private GameObject startPointChain;
 
     private bool attackDone;
@@ -19,6 +23,8 @@ public class EvaGanchoScript : MonoBehaviour
     private AudioManagerScript audioManager;
     [SerializeField] private GameObject scytheLight;
     public static EvaGanchoScript Instance;
+    private float verticalInput;
+    private float horizontalInput;
 
     private void Start() {
         scythe = GameObject.FindGameObjectWithTag("Guadaña");
@@ -35,11 +41,13 @@ public class EvaGanchoScript : MonoBehaviour
     }
     
     void Update() {
+        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
         if (animator.GetBool("Falling") == true) {
             audioManager.Stop("Steps");
         }
 
-        if (Input.GetButtonDown("Vertical") && !attackDone) {
+        if (Input.GetButtonDown("Gancho") && !attackDone && !animator.GetBool("Colgando")) {
             animator.SetFloat("Speed", 0f);
             animator.SetBool("Gancho", true);
             animator.SetBool("Jump", false);
@@ -81,7 +89,18 @@ public class EvaGanchoScript : MonoBehaviour
     void LanzarGancho() {
         audioManager.Play("LanzarGancho");
         //Hace aparecer el gancho
-        scytheClone = Instantiate(hook, hookTrans.position, hookTrans.rotation);
+        if (verticalInput > 0 && horizontalInput != 0) {
+            scytheClone = Instantiate(hook, diagonalUpHook.position, diagonalUpHook.rotation);
+        } else if(verticalInput > 0 && horizontalInput == 0) {
+            scytheClone = Instantiate(hook, verticalUpHook.position, verticalUpHook.rotation);
+        } else if (verticalInput < 0 && horizontalInput == 0) {
+            scytheClone = Instantiate(hook, verticalDownHook.position, verticalDownHook.rotation);
+        } else if (verticalInput < 0 && horizontalInput != 0) {
+            scytheClone = Instantiate(hook, diagonalDownHook.position, diagonalDownHook.rotation);
+        } else {
+            scytheClone = Instantiate(hook, horizontalHook.position, horizontalHook.rotation);
+        }
+       
         //Cooldown gancho
         Invoke("AttackDone", 1f);
         //Guadaña detras de eva desaparece mientras se mueve en forma d egancho

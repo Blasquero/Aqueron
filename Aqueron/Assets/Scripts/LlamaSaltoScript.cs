@@ -6,10 +6,11 @@ public class LlamaSaltoScript : MonoBehaviour
 {
     public static LlamaSaltoScript instance;
 
-    public void Start()
+   public void Start()
     {
         instance = this;
     }
+
     public void AutoDestruccion()
     {
         gameObject.SetActive(false);
