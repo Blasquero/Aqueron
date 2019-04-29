@@ -19,6 +19,7 @@ public class EvaMovement : MonoBehaviour {
     [SerializeField] private float jumpForce = 1000f;
     [SerializeField] private float jumpForceHorizontalHanging = 400f;
     [SerializeField] private float doubleJumpForce = 700f;
+    [SerializeField] private Transform cealingCheck;
     [Range(0, 10f)] [SerializeField] private float velocity = 4f;
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
     [Range(0, 0.05f)] [SerializeField] private float wallSlipperingVel = 0.015f;
@@ -51,7 +52,8 @@ public class EvaMovement : MonoBehaviour {
     private bool alreadyJumped;
     private bool jump;
     private bool facingRight;
-
+    private bool isCealing;
+    private float cealingCheckRadius = .2f;
 
     //Para que nose destruya entre escenas y si en estas escenas hay otro como este, el de esa escena se destruye
     private void Awake() {
@@ -81,6 +83,8 @@ public class EvaMovement : MonoBehaviour {
     }
 
     void Update() {
+
+        isCealing = Physics2D.OverlapCircle(cealingCheck.position, cealingCheckRadius, ground);
         //Detector de si hay una pared delante de eva 
         Vector2 groundPos = transform.position + transform.right * width;
         Vector2 vec2 = transform.right * -.02f; 
@@ -293,11 +297,7 @@ public class EvaMovement : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.gameObject.layer == groundLayer ) {
             isGrounded = false;
-        }
-        if (collision.gameObject.layer == rampLayer) {
-            isOnRamp = false;
-            isGrounded = false;
-        }
+        }      
     }
 
     public void DobleSaltoFinish() {

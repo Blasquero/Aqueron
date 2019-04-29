@@ -3159,11 +3159,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: 16}
-        - {x: -16, y: 3}
-        - {x: -10, y: -2}
-        - {x: 1, y: -2}
-        - {x: 3, y: 1}
-        - {x: 16, y: 1}
+        - {x: -16, y: -2}
+        - {x: 16, y: -2}
         - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
@@ -3186,8 +3183,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: 16}
-        - {x: -16, y: 1}
-        - {x: 16, y: 1}
+        - {x: -16, y: -2}
+        - {x: 16, y: -2}
         - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
@@ -3210,11 +3207,10 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: 16}
-        - {x: -16, y: 1}
-        - {x: -3, y: 1}
+        - {x: -16, y: -2}
         - {x: -1, y: -2}
-        - {x: 10, y: -2}
-        - {x: 16, y: 3}
+        - {x: 11, y: -2}
+        - {x: 16, y: -2}
         - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
