@@ -27,6 +27,11 @@ public class BaseStatsComponent : MonoBehaviour {
             }
         }
     }
+    public virtual float PercentageHealth {
+        get {
+            return (health / maxHealth) * 100; 
+        }
+    }
 
     public virtual float Damage {
         get { return damage; }
