@@ -79,7 +79,7 @@ public class EvaMovement : MonoBehaviour {
 	}
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        AudioManager = FindObjectOfType<AudioManagerScript>();
+        AudioManager = AudioManagerScript.instance;
     }
 
     void Update() {

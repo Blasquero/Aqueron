@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManagerScript : MonoBehaviour
 {
     private GameObject player;
+    [SerializeField] private GameObject boss1;
     private int playerLayer;
     private int boundariesLayer;
     private int groundLayer;
     private int enemyLayer;
     private CinemachineVirtualCamera vcam;
+    private System.Random rnd;
 
     public static GameManagerScript Instance;
     private bool repositionCamera;
@@ -28,6 +31,7 @@ public class GameManagerScript : MonoBehaviour
     }
 
     void Start() {
+        rnd = new System.Random();
         inputEnabled = true;
         player = GameObject.FindGameObjectWithTag("Player");
         repositionCamera = false;
@@ -68,5 +72,10 @@ public class GameManagerScript : MonoBehaviour
         get { return inputEnabled; }
         set { this.inputEnabled = value; }
     }
+
+    public System.Random Random {
+        get { return rnd; }
+    }
     #endregion
+
 }
