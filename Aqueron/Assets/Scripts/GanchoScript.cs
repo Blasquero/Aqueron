@@ -18,7 +18,7 @@ public class GanchoScript : MonoBehaviour {
     private int boundariesLayer;
     private int groundLayer;
     private int enemyLayer;
-    private int rampLayer;
+    private int doorLayer;
     private int scytheLayer;
     private bool hanging;
     private Animator animator;
@@ -47,7 +47,7 @@ public class GanchoScript : MonoBehaviour {
         //Cuando spawnea el gancho, el colider del personaje no afecta
         Physics2D.IgnoreLayerCollision(scytheLayer, playerLayer);
         shouldMove = true;
-        rampLayer = LayerMask.NameToLayer("Rampas");
+        doorLayer = LayerMask.NameToLayer("Puerta");
         animator = GetComponent<Animator>();
         vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
         playerAnimator = player.GetComponent<Animator>();
@@ -108,7 +108,7 @@ public class GanchoScript : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.gameObject.layer == groundLayer || collision.gameObject.layer == rampLayer) {
+        if(collision.gameObject.layer == 8 || collision.gameObject.layer == 14) {
             audioManager.Play("ImpactoGancho");
             activeScythe = true;
             transform.Translate(Vector3.zero);

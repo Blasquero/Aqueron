@@ -16,7 +16,7 @@ public class SimpleAiComponent : BaseAIComponent {
        
     }
 
-    public override void UpdateState(bool success, int nextState) {
+    public override void UpdateState(bool success) {
         switch (nextState) {
             case 1:
                 patrollingAction.StartAction();
@@ -36,6 +36,6 @@ public class SimpleAiComponent : BaseAIComponent {
             yield return new WaitForEndOfFrame();
         }
         actualState = MachineStates.Sleep;
-        UpdateState(true, 1);
+        UpdateState(true);
     }
 }

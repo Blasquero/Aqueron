@@ -16,5 +16,5 @@ public abstract class BaseAIComponent : MonoBehaviour
         get { return actualState; }
     }
 
-    public abstract void UpdateState(bool success, int nextState);
+    public abstract void UpdateState(bool success);
 }

@@ -45,7 +45,7 @@ public class BasePatrollingAction : BaseActionComponent {
         }
         if (AIComponent == null)
             AIComponent = GetComponent<BaseAIComponent>() as BaseAIComponent;
-        AIComponent.UpdateState(true, nextState);
+        AIComponent.UpdateState(true);
     }
 
 }

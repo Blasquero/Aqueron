@@ -16,6 +16,7 @@ TagManager:
   - rampaLayer
   - ChangeLevel
   - MainCam
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -35,7 +36,7 @@ TagManager:
   - Minimap
   - Escenario
   - PostProcess
-  - 
+  - Boss
   - 
   - 
   - 

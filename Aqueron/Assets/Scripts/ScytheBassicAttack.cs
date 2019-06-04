@@ -71,7 +71,7 @@ public class ScytheBassicAttack : MonoBehaviour {
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag == "Enemy") {
+        if (collision.tag == "Enemy" || collision.tag == "Boss") {
             BaseDamageComponent baseDamage = collision.gameObject.GetComponent<BaseDamageComponent>() as BaseDamageComponent;
             if (baseDamage != null) {
                 baseDamage.Damage(evaStats.Damage);
