@@ -12,6 +12,8 @@ public abstract class BaseActionComponent : MonoBehaviour
 
     public abstract void StartAction();
 
+    public abstract void StopAction();
+
     protected abstract IEnumerator Action();
 
     protected abstract void ExitAction();

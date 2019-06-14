@@ -9,6 +9,7 @@ public class BasePatrollingAction : BaseActionComponent {
     [SerializeField] protected Transform rightUpPoint;
     [SerializeField] protected Transform LeftPoint;
     [SerializeField] protected GameObject player;
+    BaseAIComponent.MachineStates finishedState = BaseAIComponent.MachineStates.Patrolling;
 
     protected override void Start() {
         AIComponent = GetComponent<BaseAIComponent>() as BaseAIComponent;
@@ -45,7 +46,12 @@ public class BasePatrollingAction : BaseActionComponent {
         }
         if (AIComponent == null)
             AIComponent = GetComponent<BaseAIComponent>() as BaseAIComponent;
-        AIComponent.UpdateState(true);
+        AIComponent.UpdateState(true, finishedState);
+    }
+
+    public override void StopAction() {
+        StopAllCoroutines();
+
     }
 
 }

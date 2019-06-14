@@ -16,15 +16,16 @@ public class SimpleAiComponent : BaseAIComponent {
        
     }
 
-    public override void UpdateState(bool success) {
+    public override void UpdateState(bool success, MachineStates thisState) {
+        actualState = thisState;
         switch (nextState) {
             case 1:
                 patrollingAction.StartAction();
-                actualState = MachineStates.Patrolling;
+                thisState = MachineStates.Patrolling;
                 break;
             case 2:
                 sleepAction.StartAction();
-                actualState = MachineStates.Sleep;
+                thisState = MachineStates.Sleep;
                 break;
         }
     }
@@ -36,6 +37,6 @@ public class SimpleAiComponent : BaseAIComponent {
             yield return new WaitForEndOfFrame();
         }
         actualState = MachineStates.Sleep;
-        UpdateState(true);
+        UpdateState(true, MachineStates.Sleep);
     }
 }

@@ -7,6 +7,7 @@ public class BaseSleepAction : BaseActionComponent {
     [SerializeField] protected GameObject player;
     private float time;
     private float duration;
+    BaseAIComponent.MachineStates finishedState = BaseAIComponent.MachineStates.Sleep;
 
     protected override void Start() {
         AIComponent = GetComponent<BaseAIComponent>() as BaseAIComponent;
@@ -35,7 +36,10 @@ public class BaseSleepAction : BaseActionComponent {
         }
         if (AIComponent == null)
             AIComponent = GetComponent<BaseAIComponent>() as BaseAIComponent;
-        AIComponent.UpdateState(true);
+        AIComponent.UpdateState(true, finishedState);
     }
 
+    public override void StopAction() {
+        StopAllCoroutines();
+    }
 }

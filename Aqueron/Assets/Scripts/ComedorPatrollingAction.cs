@@ -8,6 +8,7 @@ public class ComedorPatrollingAction : BaseActionComponent
     [SerializeField] protected Transform leftPoint;
     [SerializeField] protected Transform rightPoint;
     [SerializeField] protected float speed;
+    BaseAIComponent.MachineStates finishedState = BaseAIComponent.MachineStates.Patrolling;
 
     protected override void Start() {
         AIComponent = GetComponent<ComedorAIComponent>() as BaseAIComponent;
@@ -33,9 +34,13 @@ public class ComedorPatrollingAction : BaseActionComponent
         ExitAction();
     }
 
-    protected override void ExitAction() {
+    protected override void ExitAction( ) {
         if(AIComponent == null)
             AIComponent = GetComponent<BaseAIComponent>() as BaseAIComponent;
-        AIComponent.UpdateState(true);
+        AIComponent.UpdateState(true, finishedState);
+    }
+
+    public override void StopAction() {
+        StopAllCoroutines();
     }
 }

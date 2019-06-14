@@ -15,13 +15,13 @@ public class ComedorMoveToPlayer : BaseActionComponent
     private Rigidbody2D rb;
     [SerializeField] private LayerMask playerLayer;
     bool reachedEva;
+    BaseAIComponent.MachineStates finishedState = BaseAIComponent.MachineStates.MoveToPlayer;
 
 
     protected override void Start() {
         player = EvaMovement.Instance.gameObject;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-        speed = 400f;
     }
 
     public override void StartAction() {
@@ -40,24 +40,22 @@ public class ComedorMoveToPlayer : BaseActionComponent
     protected override void ExitAction() {
         if (AIComponent == null)
             AIComponent = GetComponent<BaseAIComponent>() as BaseAIComponent;
-        AIComponent.UpdateState(true);
-        Debug.Log("UpdateState");
+        AIComponent.UpdateState(true, finishedState);
+    }
+
+    public override void StopAction() {
+        StopAllCoroutines();
     }
 
     private void OnPathCompplete(Path p) {
         if(!p.error) {
             path = p;
-      //      currentWayPoint = 0;
         }
     }
 
     private void FixedUpdate() {
         reachedEva = Physics2D.Linecast(transform.position, (Vector2)transform.right * -1.5f + (Vector2)transform.position, playerLayer);
         Debug.DrawLine(transform.position, (Vector2)transform.right * -1.5f + (Vector2)transform.position);
-        Debug.Log(reachedEva);
-
-
-
 
         if (path == null)
             return;
