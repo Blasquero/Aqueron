@@ -7,14 +7,14 @@ public class ComedorMoveToPlayer : BaseActionComponent
 {
     private GameObject player;
     [SerializeField] private float speed;
-    private float nextWayPointDistance = 1f;
+    private float nextWayPointDistance = 0.5f;
     private int currentWayPoint = 0;
     private bool reachEndOfPath = false;
     private Path path;
     private Seeker seeker;
     private Rigidbody2D rb;
     [SerializeField] private LayerMask playerLayer;
-    bool reachedEva;
+    private bool reachedEva;
     BaseAIComponent.MachineStates finishedState = BaseAIComponent.MachineStates.MoveToPlayer;
 
 
